@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Technocybber | Elite Hardware Store</title>
+    
+    <!-- CSS Externo e Fontes -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root { 
+            --accent: #00f2ff; 
+            --purple: #7000ff;
+            --bg-overlay: rgba(0, 8, 15, 0.60); 
+            --card-glass: rgba(10, 10, 20, 0.85);
+            --border: rgba(0, 242, 255, 0.2);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: linear-gradient(var(--bg-overlay), var(--bg-overlay)), 
+                        url('https://www.meupositivo.com.br/doseujeito/wp-content/uploads/2025/06/chip-ia-hardware.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff; 
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* --- HEADER RESPONSIVO --- */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 10px 5%;
+            background: rgba(0, 0, 0, 0.90); backdrop-filter: blur(15px);
+            display: flex; flex-direction: row; justify-content: space-between;
+            align-items: center; z-index: 1000; border-bottom: 1px solid var(--border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            gap: 10px;
+        }
+
+        .logo-img {
+            width: 50px; height: 50px;
+            object-fit: cover; border-radius: 50%;
+            mix-blend-mode: screen; filter: drop-shadow(0 0 8px var(--accent));
+        }
+
+        .logo-text { 
+            font-family: 'Syncopate', sans-serif; color: #fff; 
+            font-size: 1rem; font-weight: 700; letter-spacing: 1px;
+        }
+
+        nav { display: flex; gap: 15px; }
+        nav a { 
+            color: #fff; text-decoration: none; 
+            font-size: 0.75rem; font-weight: 700; text-transform: uppercase; 
+            transition: 0.3s; letter-spacing: 1px;
+        }
+        nav a:hover { color: var(--accent); }
+
+        /* --- SEÇÕES ADAPTÁVEIS --- */
+        section { 
+            padding: 80px 20px; 
+            min-height: auto; 
+            display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; 
+        }
+        
+        .section-title { 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: clamp(1.1rem, 4vw, 1.5rem); 
+            margin-bottom: 40px; text-align: center; 
+            letter-spacing: 4px; color: var(--accent); 
+        }
+
+        #home { height: 100vh; text-align: center; padding-top: 60px; }
+        #home h1 { 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: clamp(1.5rem, 6vw, 3.2rem); 
+            letter-spacing: clamp(5px, 2vw, 15px); 
+            margin-bottom: 20px; text-shadow: 0 0 20px rgba(0,0,0,0.8); 
+        }
+        .hero-subtitle { 
+            font-size: clamp(0.6rem, 2vw, 0.8rem); 
+            color: var(--accent); letter-spacing: 3px; 
+            padding: 10px 20px; border: 1px solid var(--accent); 
+            text-transform: uppercase; background: rgba(0,0,0,0.4); 
+        }
+
+        /* --- GRID DE PRODUTOS RESPONSIVO --- */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px; width: 100%; max-width: 1200px; 
+        }
+        
+        .card { 
+            background: var(--card-glass); padding: 20px; border-radius: 8px; 
+            border: 1px solid var(--border); transition: 0.4s; text-align: center;
+            display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        
+        .product-img { 
+            width: 100%; height: 200px; 
+            object-fit: contain; background-color: #ffffff;
+            border-radius: 8px; margin-bottom: 15px; padding: 10px;
+        }
+
+        .card h3 { font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 10px; }
+        .card p { font-size: 0.75rem; color: #bbb; flex-grow: 1; }
+
+        .price { font-size: 1.3rem; font-weight: 700; color: var(--accent); margin: 15px 0; display: block; }
+        
+        .btn { 
+            display: block; width: 100%; padding: 14px; 
+            background: transparent; border: 1px solid var(--accent);
+            color: var(--accent); text-decoration: none; text-align: center;
+            font-weight: 700; font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn:hover { background: var(--accent); color: #000; }
+
+        /* --- FORMULÁRIO RESPONSIVO --- */
+        .form-container { 
+            width: 100%; max-width: 450px; 
+            background: rgba(0,0,0,0.85); padding: 30px 20px; 
+            border: 1px solid var(--border); border-radius: 10px;
+        }
+        input, select, textarea { 
+            width: 100%; padding: 12px; margin-bottom: 15px; background: #0a0a0a; 
+            border: 1px solid #333; color: #fff; outline: none; font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+        }
+        textarea { resize: vertical; min-height: 100px; }
+
+        footer { padding: 30px 20px; text-align: center; font-size: 0.55rem; color: #777; border-top: 1px solid #111; letter-spacing: 1px; }
+
+        /* --- MEDIA QUERIES --- */
+        @media (max-width: 992px) {
+            header { padding: 10px 3%; }
+            .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; height: auto; padding: 15px 10px; }
+            .logo-text { font-size: 0.9rem; }
+            nav { margin-top: 10px; gap: 10px; width: 100%; justify-content: center; }
+            nav a { font-size: 0.7rem; }
+            section { padding: 60px 15px; }
+            #home h1 { letter-spacing: 5px; }
+            .card { padding: 15px; }
+            .product-img { height: 180px; }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text { display: none; }
+            .logo-img { width: 45px; height: 45px; }
+            nav a { letter-spacing: 0px; font-size: 0.65rem; }
+            .section-title { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#home" class="logo-container">
+            <img src="https://i.gifer.com/origin/c9/c97052cf6ec794a3c11e7ecc88f7fe52_w200.gif" alt="Logo" class="logo-img">
+            <div class="logo-text">TECHNOCYBBER</div>
+        </a>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#loja">Loja</a>
+            <a href="#servicos">Serviços</a>
+            <a href="#contato">Contato</a>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h1>TECHNOCYBBER</h1>
+        <p class="hero-subtitle">SOLUÇÕES EM TI | HIGH-PERFORMANCE</p>
+    </section>
+
+    <!-- LOJA -->
+    <section id="loja">
+        <h2 class="section-title">HARDWARE ELITE</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_716038-MLU78929255715_092024-F.webp" class="product-img">
+                <h3>RTX 3080 OC 10GB GDDR6X</h3>
+                <p>Performance máxima em 4K e IA de última geração.</p>
+                <span class="price">R$ 7.000,00</span>
+                <a href="#" class="btn">ORDENAR AGORA</a>
+            </div>
+            
+            <div class="card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_977430-MLA104860898285_012026-F.webp" class="product-img">
+                <h3>TECLADO MECÂNICO RGB</h3>
+                <p>Switches ópticos ultra-rápidos e construção premium.</p>
+                <span class="price">R$ 850,00</span>
+                <a href="#" class="btn">ORDENAR AGORA</a>
+            </div>
+
+            <div class="card">
+                <img src="https://m.media-amazon.com/images/I/71Dq8+22SwL._AC_SX679_.jpg" class="product-img">
+                <h3>MOTHERBOARD X670E</h3>
+                <p>Estabilidade extrema para overclocking e PCIe 5.0.</p>
+                <span class="price">R$ 4.250,00</span>
+                <a href="#" class="btn">ORDENAR AGORA</a>
+            </div>
+
+            <div class="card">
+                <img src="https://m.media-amazon.com/images/I/610sKT7xhPL._AC_SX679_.jpg" class="product-img">
+                <h3>HEADSET HI-RES 7.1</h3>
+                <p>Áudio espacial imersivo e cancelamento de ruído ativo.</p>
+                <span class="price">R$ 1.000,00</span>
+                <a href="#" class="btn">ORDENAR AGORA</a>
+            </div>
+
+            <div class="card">
+                <img src="https://m.media-amazon.com/images/I/51+dzbnWF9L._AC_SX679_.jpg" class="product-img">
+                <h3>SSD NVME GEN5 2TB</h3>
+                <p>Velocidades insanas de leitura até 12.000 MB/s.</p>
+                <span class="price">R$ 5.500,00</span>
+                <a href="#" class="btn">ORDENAR AGORA</a>
+            </div>
+
+            <div class="card">
+                <img src="https://m.media-amazon.com/images/I/61XsKRKsGoL._AC_SX679_.jpg" class="product-img">
+                <h3>RAM 32GB DDR5</h3>
+                <p>Frequência de 6000MHz para multitarefa sem gargalos.</p>
+                <span class="price">R$ 5.550,00</span>
+                <a href="#" class="btn">ORDENAR AGORA</a>
+            </div>
+
+            <div class="card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_647266-MLB86683348094_062025-F.webp" class="product-img">
+                <h3>PC GAMER RYZEN 5 5600GT</h3>
+                <p>A máquina definitiva montada por nossos especialistas.</p>
+                <span class="price">R$ 6.500,00</span>
+                <a href="#" class="btn">ORDENAR AGORA</a>
+            </div>
+
+            <div class="card">
+                <img src="https://tse4.mm.bing.net/th/id/OIP.YVrwoGyy78h3c4L4rba-hAHaEK?pid=ImgDet&w=474&h=266&rs=1&o=7&rm=3" class="product-img">
+                <h3>CENTRAL DE JOGOS</h3>
+                <p>Setup completo pronto para streaming e alta performance.</p>
+                <span class="price">A PARTIR DE R$ 300,00</span>
+                <a href="#" class="btn">ORDENAR AGORA</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos">
+        <h2 class="section-title">SERVIÇOS TÉCNICOS</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>MONTAGEM ELITE</h3>
+                <p>Montagem artesanal, cable management e testes de estresse térmico.</p>
+            </div>
+            <div class="card">
+                <h3>OTIMIZAÇÃO DE OS</h3>
+                <p>Remoção de bloatwares e ajuste de BIOS para máxima performance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato">
+        <div class="form-container">
+            <h2 style="text-align:center; margin-bottom:25px; font-family:'Syncopate'; font-size:0.7rem; color:var(--accent);">CONSULTORIA TÉCNICA</h2>
+            <form id="formWpp">
+                <input type="text" id="nome" placeholder="SEU NOME" required>
+                <input type="text" id="endereco" placeholder="SEU ENDEREÇO COMPLETO" required>
+
+                <select id="tipo_solicitacao" required>
+                    <option value="" disabled selected>TIPO DE SOLICITAÇÃO</option>
+                    <option value="Formatação">FORMATAÇÃO</option>
+                    <option value="Peças / Hardware">PEÇAS / HARDWARE</option>
+                    <option value="Suporte Técnico">SUPORTE TÉCNICO</option>
+                </select>
+
+                <input type="text" id="data" placeholder="DATA DESEJADA" required>
+                
+                <!-- NOVO CAMPO: DESCRIÇÃO DO PROBLEMA -->
+                <textarea id="descricao" placeholder="DESCREVA O PROBLEMA OU NECESSIDADE" required></textarea>
+
+                <button type="button" onclick="enviar()" class="btn" style="width:100%;">ENVIAR REQUISIÇÃO</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>TECHNOCYBBER // EST. 2035 // HIGH-END HARDWARE DIVISION</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    <script>
+        flatpickr("#data", { enableTime: true, dateFormat: "d/m/Y H:i", minDate: "today", locale: "pt" });
+
+        function enviar() {
+            const nome = document.getElementById('nome').value;
+            const endereco = document.getElementById('endereco').value;
+            const tipo = document.getElementById('tipo_solicitacao').value;
+            const data = document.getElementById('data').value;
+            const descricao = document.getElementById('descricao').value; // Capturando a descrição
+
+            if(!nome || !endereco || !tipo || !data || !descricao) {
+                return alert("Por favor, preencha todos os campos do formulário.");
+            }
+
+            const msg = `*SOLICITAÇÃO TECHNOCYBBER*%0A*Cliente:* ${nome}%0A*Endereço:* ${endereco}%0A*Tipo:* ${tipo}%0A*Data:* ${data}%0A*Descrição:* ${descricao}`;
+            window.open(`https://wa.me/5511986756309?text=${msg}`, '_blank');
+        }
+    </script>
+</body>
+</html>
