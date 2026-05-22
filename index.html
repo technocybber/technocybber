@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Technocybber | Elite Hardware Store</title>
     
+    <!-- SDK MERCADO PAGO -->
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+
     <!-- CSS Externo e Fontes -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
@@ -130,6 +133,16 @@
         }
         .btn:hover { background: var(--accent); color: #000; }
 
+        /* MODAL DE PAGAMENTO */
+        #payment-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95); z-index: 9999; overflow-y: auto; padding: 40px 10px;
+        }
+        .payment-content {
+            max-width: 500px; margin: 0 auto; background: #050505; 
+            border: 1px solid var(--accent); padding: 20px; border-radius: 10px;
+        }
+
         /* --- FORMULÁRIO RESPONSIVO --- */
         .form-container { 
             width: 100%; max-width: 450px; 
@@ -145,28 +158,11 @@
 
         footer { padding: 30px 20px; text-align: center; font-size: 0.55rem; color: #777; border-top: 1px solid #111; letter-spacing: 1px; }
 
-        /* --- MEDIA QUERIES --- */
-        @media (max-width: 992px) {
-            header { padding: 10px 3%; }
-            .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-        }
-
         @media (max-width: 768px) {
             header { flex-direction: column; height: auto; padding: 15px 10px; }
-            .logo-text { font-size: 0.9rem; }
             nav { margin-top: 10px; gap: 10px; width: 100%; justify-content: center; }
-            nav a { font-size: 0.7rem; }
             section { padding: 60px 15px; }
             #home h1 { letter-spacing: 5px; }
-            .card { padding: 15px; }
-            .product-img { height: 180px; }
-        }
-
-        @media (max-width: 480px) {
-            .logo-text { display: none; }
-            .logo-img { width: 45px; height: 45px; }
-            nav a { letter-spacing: 0px; font-size: 0.65rem; }
-            .section-title { font-size: 1rem; }
         }
     </style>
 </head>
@@ -199,7 +195,7 @@
                 <h3>RTX 3080 OC 10GB GDDR6X</h3>
                 <p>Performance máxima em 4K e IA de última geração.</p>
                 <span class="price">R$ 7.000,00</span>
-                <a href="#" class="btn">ORDENAR AGORA</a>
+                <button onclick="abrirPagamento(7000.00, 'RTX 3080 OC')" class="btn">ORDENAR AGORA</button>
             </div>
             
             <div class="card">
@@ -207,7 +203,7 @@
                 <h3>TECLADO MECÂNICO RGB</h3>
                 <p>Switches ópticos ultra-rápidos e construção premium.</p>
                 <span class="price">R$ 850,00</span>
-                <a href="#" class="btn">ORDENAR AGORA</a>
+                <button onclick="abrirPagamento(850.00, 'Teclado Mecânico RGB')" class="btn">ORDENAR AGORA</button>
             </div>
 
             <div class="card">
@@ -215,7 +211,7 @@
                 <h3>MOTHERBOARD X670E</h3>
                 <p>Estabilidade extrema para overclocking e PCIe 5.0.</p>
                 <span class="price">R$ 4.250,00</span>
-                <a href="#" class="btn">ORDENAR AGORA</a>
+                <button onclick="abrirPagamento(4250.00, 'Motherboard X670E')" class="btn">ORDENAR AGORA</button>
             </div>
 
             <div class="card">
@@ -223,7 +219,7 @@
                 <h3>HEADSET HI-RES 7.1</h3>
                 <p>Áudio espacial imersivo e cancelamento de ruído ativo.</p>
                 <span class="price">R$ 1.000,00</span>
-                <a href="#" class="btn">ORDENAR AGORA</a>
+                <button onclick="abrirPagamento(1000.00, 'Headset Hi-Res 7.1')" class="btn">ORDENAR AGORA</button>
             </div>
 
             <div class="card">
@@ -231,7 +227,7 @@
                 <h3>SSD NVME GEN5 2TB</h3>
                 <p>Velocidades insanas de leitura até 12.000 MB/s.</p>
                 <span class="price">R$ 5.500,00</span>
-                <a href="#" class="btn">ORDENAR AGORA</a>
+                <button onclick="abrirPagamento(5500.00, 'SSD NVME Gen5 2TB')" class="btn">ORDENAR AGORA</button>
             </div>
 
             <div class="card">
@@ -239,7 +235,7 @@
                 <h3>RAM 32GB DDR5</h3>
                 <p>Frequência de 6000MHz para multitarefa sem gargalos.</p>
                 <span class="price">R$ 5.550,00</span>
-                <a href="#" class="btn">ORDENAR AGORA</a>
+                <button onclick="abrirPagamento(5550.00, 'RAM 32GB DDR5')" class="btn">ORDENAR AGORA</button>
             </div>
 
             <div class="card">
@@ -247,7 +243,7 @@
                 <h3>PC GAMER RYZEN 5 5600GT</h3>
                 <p>A máquina definitiva montada por nossos especialistas.</p>
                 <span class="price">R$ 6.500,00</span>
-                <a href="#" class="btn">ORDENAR AGORA</a>
+                <button onclick="abrirPagamento(6500.00, 'PC Gamer Ryzen 5')" class="btn">ORDENAR AGORA</button>
             </div>
 
             <div class="card">
@@ -255,10 +251,18 @@
                 <h3>CENTRAL DE JOGOS</h3>
                 <p>Setup completo pronto para streaming e alta performance.</p>
                 <span class="price">A PARTIR DE R$ 300,00</span>
-                <a href="#" class="btn">ORDENAR AGORA</a>
+                <button onclick="abrirPagamento(300.00, 'Central de Jogos')" class="btn">ORDENAR AGORA</button>
             </div>
         </div>
     </section>
+
+    <!-- JANELA DE PAGAMENTO -->
+    <div id="payment-modal">
+        <div class="payment-content">
+            <button onclick="document.getElementById('payment-modal').style.display='none'" class="btn" style="margin-bottom:20px;">FECHAR</button>
+            <div id="paymentBrick_container"></div>
+        </div>
+    </div>
 
     <!-- SERVIÇOS -->
     <section id="servicos">
@@ -282,19 +286,14 @@
             <form id="formWpp">
                 <input type="text" id="nome" placeholder="SEU NOME" required>
                 <input type="text" id="endereco" placeholder="SEU ENDEREÇO COMPLETO" required>
-
                 <select id="tipo_solicitacao" required>
                     <option value="" disabled selected>TIPO DE SOLICITAÇÃO</option>
                     <option value="Formatação">FORMATAÇÃO</option>
                     <option value="Peças / Hardware">PEÇAS / HARDWARE</option>
                     <option value="Suporte Técnico">SUPORTE TÉCNICO</option>
                 </select>
-
                 <input type="text" id="data" placeholder="DATA DESEJADA" required>
-                
-                <!-- NOVO CAMPO: DESCRIÇÃO DO PROBLEMA -->
                 <textarea id="descricao" placeholder="DESCREVA O PROBLEMA OU NECESSIDADE" required></textarea>
-
                 <button type="button" onclick="enviar()" class="btn" style="width:100%;">ENVIAR REQUISIÇÃO</button>
             </form>
         </div>
@@ -306,20 +305,58 @@
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    
     <script>
-        flatpickr("#data", { enableTime: true, dateFormat: "d/m/Y H:i", minDate: "today", locale: "pt" });
+        // COLOQUE SUA PUBLIC KEY ENTRE AS ASPAS ABAIXO:
+        const mp = new MercadoPago('SUA_CHAVE_PUBLICA_AQUI'); 
 
+        async function abrirPagamento(valor, produto) {
+            document.getElementById('payment-modal').style.display = 'block';
+            const bricksBuilder = mp.bricks();
+
+            const settings = {
+                initialization: {
+                    amount: valor,
+                    payer: { email: "cliente@exemplo.com" },
+                },
+                customization: {
+                    paymentMethods: {
+                        ticket: "all", bankTransfer: "all", creditCard: "all",
+                    },
+                },
+                callbacks: {
+                    onReady: () => { console.log("Pronto!"); },
+                    onSubmit: ({ selectedPaymentMethod, formData }) => {
+                        return new Promise((resolve, reject) => {
+                            fetch("/api/finalizar", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(formData),
+                            })
+                            .then(res => res.json())
+                            .then(res => {
+                                if(res.status === 'approved') alert("PAGAMENTO APROVADO!");
+                                resolve();
+                            })
+                            .catch(err => reject());
+                        });
+                    },
+                    onError: (error) => console.error(error),
+                },
+            };
+            if (window.paymentBrickController) window.paymentBrickController.unmount();
+            window.paymentBrickController = await bricksBuilder.create('payment', 'paymentBrick_container', settings);
+        }
+
+        // WhatsApp original
+        flatpickr("#data", { enableTime: true, dateFormat: "d/m/Y H:i", minDate: "today", locale: "pt" });
         function enviar() {
             const nome = document.getElementById('nome').value;
             const endereco = document.getElementById('endereco').value;
             const tipo = document.getElementById('tipo_solicitacao').value;
             const data = document.getElementById('data').value;
-            const descricao = document.getElementById('descricao').value; // Capturando a descrição
-
-            if(!nome || !endereco || !tipo || !data || !descricao) {
-                return alert("Por favor, preencha todos os campos do formulário.");
-            }
-
+            const descricao = document.getElementById('descricao').value;
+            if(!nome || !endereco || !tipo || !data || !descricao) return alert("Preencha tudo.");
             const msg = `*SOLICITAÇÃO TECHNOCYBBER*%0A*Cliente:* ${nome}%0A*Endereço:* ${endereco}%0A*Tipo:* ${tipo}%0A*Data:* ${data}%0A*Descrição:* ${descricao}`;
             window.open(`https://wa.me/5511986756309?text=${msg}`, '_blank');
         }
