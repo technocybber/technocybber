@@ -216,15 +216,16 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
     
-    <script>
-        // COLOQUE SUA PUBLIC KEY REAL DO MERCADO PAGO AQUI
-        // Exemplo: APP_USR-837482-8472-8472...
+   <script>
+        // CONFIGURAÇÃO MERCADO PAGO
+        // Verifique se esta é a sua PUBLIC KEY real (Chave Pública)
         const mp = new MercadoPago('APP_USR-7fb24ee0-2b5b-49dc-be56-6a8efdd8175b'); 
 
         async function abrirPagamento(valor, produto) {
-            const emailCliente = prompt("Digite seu e-mail para processar a ordem de: " + produto);
+            const emailCliente = prompt("Digite seu e-mail para finalizar a ordem de: " + produto);
+            
             if (!emailCliente || !emailCliente.includes("@")) {
-                alert("E-mail válido necessário para continuar.");
+                alert("E-mail necessário para processar o pagamento.");
                 return;
             }
 
@@ -238,10 +239,21 @@
                 },
                 customization: {
                     paymentMethods: {
-                        ticket: "all", bankTransfer: "all", creditCard: "all",
+                        ticket: "all",
+                        bankTransfer: "all",
+                        creditCard: "all",
                     },
                 },
                 callbacks: {
+                    // ESTAS DUAS LINHAS ABAIXO SÃO O QUE ESTAVA FALTANDO E CAUSANDO O ERRO:
+                    onReady: () => {
+                        console.log("O formulário carregou com sucesso!");
+                    },
+                    onError: (error) => {
+                        console.error("Erro no carregamento:", error);
+                        alert("Erro ao carregar o pagamento. Verifique sua conexão ou a chave Public Key.");
+                    },
+                    // -------------------------------------------------------------
                     onSubmit: ({ formData }) => {
                         return new Promise((resolve, reject) => {
                             fetch("/api/finalizar", {
@@ -251,7 +263,11 @@
                             })
                             .then(res => res.json())
                             .then(res => {
-                                if(res.status === 'approved') alert("ORDEM APROVADA!");
+                                if(res.status === 'approved') {
+                                    alert("PAGAMENTO APROVADO!");
+                                } else {
+                                    alert("O pagamento está sendo processado ou foi recusado.");
+                                }
                                 resolve();
                             })
                             .catch(err => {
@@ -260,16 +276,17 @@
                             });
                         });
                     },
-                    onError: (error) => {
-                        console.error("Erro no Mercado Pago:", error);
-                        alert("Houve um erro ao carregar o pagamento. Verifique sua Public Key.");
-                    },
                 },
             };
-            if (window.paymentBrickController) window.paymentBrickController.unmount();
+
+            if (window.paymentBrickController) {
+                window.paymentBrickController.unmount();
+            }
+            
             window.paymentBrickController = await bricksBuilder.create('payment', 'paymentBrick_container', settings);
         }
 
+        // Script original do WhatsApp mantido abaixo
         flatpickr("#data", { enableTime: true, dateFormat: "d/m/Y H:i", minDate: "today", locale: "pt" });
         function enviar() {
             const nome = document.getElementById('nome').value;
@@ -277,7 +294,7 @@
             const tipo = document.getElementById('tipo_solicitacao').value;
             const data = document.getElementById('data').value;
             const descricao = document.getElementById('descricao').value;
-            if(!nome || !endereco || !tipo || !data || !descricao) return alert("Preencha todos os campos.");
+            if(!nome || !endereco || !tipo || !data || !descricao) return alert("Por favor, preencha todos os campos.");
             const msg = `*SOLICITAÇÃO TECHNOCYBBER*%0A*Cliente:* ${nome}%0A*Endereço:* ${endereco}%0A*Tipo:* ${tipo}%0A*Data:* ${data}%0A*Descrição:* ${descricao}`;
             window.open(`https://wa.me/5511986756309?text=${msg}`, '_blank');
         }
