@@ -1,4 +1,6 @@
 {
+  "name": "technocybber",
+  "version": "1.0.0",
   "dependencies": {
     "mercadopago": "^2.0.11",
     "nodemailer": "^6.9.9"
