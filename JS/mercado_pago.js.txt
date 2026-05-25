@@ -1,0 +1,76 @@
+ <script>
+        const mp = new MercadoPago('APP_USR-7fb24ee0-2b5b-49dc-be56-6a8efdd8175b'); 
+        let v_atual = 0;
+        let p_atual = "";
+
+        function abrirModalEmail(valor, produto) {
+            v_atual = valor;
+            p_atual = produto;
+            document.getElementById('payment-modal').style.display = 'block';
+            document.getElementById('email-step').style.display = 'block';
+            document.getElementById('paymentBrick_container').innerHTML = ''; 
+        }
+
+        function fecharModal() {
+            document.getElementById('payment-modal').style.display = 'none';
+            if (window.paymentBrickController) window.paymentBrickController.unmount();
+        }
+
+        async function validarEProcessar() {
+            const email = document.getElementById('input-email-cliente').value;
+            if (!email || !email.includes("@")) {
+                alert("Por favor, digite um e-mail válido.");
+                return;
+            }
+            document.getElementById('email-step').style.display = 'none';
+            const bricksBuilder = mp.bricks();
+            const settings = {
+                initialization: { amount: v_atual, payer: { email: email } },
+                customization: { paymentMethods: { ticket: "all", bankTransfer: "all", creditCard: "all" } },
+                callbacks: {
+                    onReady: () => { console.log("MP Pronto"); },
+                    onError: (error) => { console.error(error); alert("Erro ao carregar Mercado Pago."); },
+                    onSubmit: ({ formData }) => {
+                        return new Promise((resolve, reject) => {
+                            fetch("/api/finalizar", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify(formData),
+                            })
+                            .then(res => {
+                                if (!res.ok) throw new Error("Erro no servidor");
+                                return res.json();
+                            })
+                            .then(res => {
+                                if(res.status === 'approved') {
+                                    alert("✅ SUCESSO: Pagamento aprovado! Verifique seu e-mail.");
+                                } else if (res.status === 'pending' || res.status === 'in_process') {
+                                    alert("⏳ PROCESSANDO: Siga as instruções na tela. O e-mail será enviado em instantes.");
+                                } else {
+                                    alert("❌ PAGAMENTO NÃO APROVADO: Verifique os dados ou mude a forma de pagamento.");
+                                }
+                                resolve();
+                            })
+                            .catch(err => {
+                                alert("❌ Erro ao conectar com o servidor. Tente novamente.");
+                                reject();
+                            });
+                        });
+                    },
+                },
+            };
+            window.paymentBrickController = await bricksBuilder.create('payment', 'paymentBrick_container', settings);
+        }
+
+        flatpickr("#data", { enableTime: true, dateFormat: "d/m/Y H:i", minDate: "today", locale: "pt" });
+        function enviar() {
+            const nome = document.getElementById('nome').value;
+            const endereco = document.getElementById('endereco').value;
+            const tipo = document.getElementById('tipo_solicitacao').value;
+            const data = document.getElementById('data').value;
+            const descricao = document.getElementById('descricao').value;
+            if(!nome || !endereco || !tipo || !data || !descricao) return alert("Preencha todos os campos.");
+            const msg = `*SOLICITAÇÃO TECHNOCYBBER*%0A*Cliente:* ${nome}%0A*Endereço:* ${endereco}%0A*Tipo:* ${tipo}%0A*Data:* ${data}%0A*Descrição:* ${descricao}`;
+            window.open(`https://wa.me/5511986756309?text=${msg}`, '_blank');
+        }
+    </script>
