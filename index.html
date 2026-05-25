@@ -61,9 +61,11 @@
         .btn { display: block; width: 100%; padding: 14px; background: transparent; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; text-align: center; font-weight: 700; font-size: 0.7rem; letter-spacing: 2px; transition: 0.3s; cursor: pointer; }
         .btn:hover { background: var(--accent); color: #000; }
 
-        /* MODAL DE PAGAMENTO */
+        /* MODAL DE PAGAMENTO ATUALIZADO */
         #payment-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; overflow-y: auto; padding: 40px 10px; }
         .payment-content { max-width: 500px; margin: 0 auto; background: #050505; border: 1px solid var(--accent); padding: 20px; border-radius: 10px; }
+        
+        /* Campo de e-mail dentro do modal */
         #email-step { margin-bottom: 20px; text-align: center; }
         #email-step input { width: 100%; padding: 15px; background: #111; border: 1px solid var(--accent); color: #fff; margin-bottom: 10px; outline: none; font-family: 'Inter', sans-serif; }
 
@@ -99,7 +101,7 @@
         <p style="font-size: clamp(0.6rem, 2vw, 0.8rem); color: var(--accent); letter-spacing: 3px; padding: 10px 20px; border: 1px solid var(--accent); text-transform: uppercase;">SOLUÇÕES EM TI | HIGH-PERFORMANCE</p>
     </section>
 
-    <!-- LOJA -->
+    <!-- LOJA COM TODOS OS PRODUTOS -->
     <section id="loja">
         <h2 class="section-title">HARDWARE ELITE</h2>
         <div class="grid">
@@ -176,7 +178,7 @@
         </div>
     </div>
 
-    <!-- SERVIÇOS -->
+    <!-- SERVIÇOS TÉCNICOS -->
     <section id="servicos">
         <h2 class="section-title">SERVIÇOS TÉCNICOS</h2>
         <div class="grid">
@@ -257,20 +259,22 @@
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify(formData),
                             })
-                            .then(res => res.json())
                             .then(res => {
-                                // LÓGICA DE STATUS MELHORADA
+                                if (!res.ok) throw new Error("Erro no servidor");
+                                return res.json();
+                            })
+                            .then(res => {
                                 if(res.status === 'approved') {
-                                    alert("✅ SUCESSO: Pagamento Aprovado! Verifique seu e-mail.");
+                                    alert("✅ SUCESSO: Pagamento aprovado! Verifique seu e-mail.");
                                 } else if (res.status === 'pending' || res.status === 'in_process') {
-                                    alert("⏳ AGUARDANDO: Pagamento em processamento. Finalize no seu banco. Enviamos os detalhes para seu e-mail.");
+                                    alert("⏳ PROCESSANDO: Siga as instruções na tela. O e-mail será enviado em instantes.");
                                 } else {
-                                    alert("❌ O pagamento não foi aprovado.");
+                                    alert("❌ PAGAMENTO NÃO APROVADO: Verifique os dados ou mude a forma de pagamento.");
                                 }
                                 resolve();
                             })
                             .catch(err => {
-                                alert("❌ Erro ao conectar com o servidor.");
+                                alert("❌ Erro ao conectar com o servidor. Tente novamente.");
                                 reject();
                             });
                         });
@@ -280,7 +284,6 @@
             window.paymentBrickController = await bricksBuilder.create('payment', 'paymentBrick_container', settings);
         }
 
-        // WHATSAPP
         flatpickr("#data", { enableTime: true, dateFormat: "d/m/Y H:i", minDate: "today", locale: "pt" });
         function enviar() {
             const nome = document.getElementById('nome').value;
