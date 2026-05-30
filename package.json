@@ -1,8 +1,9 @@
 {
   "name": "technocybber",
   "version": "1.0.0",
+  "description": "Technocybber Elite Hardware Store",
   "dependencies": {
-    "mercadopago": "^2.0.11",
-    "nodemailer": "^6.9.9"
+    "mercadopago": "^2.0.0",
+    "nodemailer": "^6.9.0"
   }
 }
