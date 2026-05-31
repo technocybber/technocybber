@@ -261,9 +261,12 @@
             const bricksBuilder = mp.bricks();
             const settings = {
                 initialization: {
-                    amount: v_atual,
-                    payer: { email: email }
-                },
+    amount: v_atual,
+    payer: { 
+        email: email,
+        entity_type: 'individual'
+    }
+},
                 customization: {
                     paymentMethods: { ticket: "all", bankTransfer: "all", creditCard: "all" }
                 },
