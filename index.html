@@ -22,116 +22,108 @@
         
         body { 
             font-family: 'Inter', sans-serif; 
-            background: linear-gradient(rgba(0,8,15,0.8), rgba(0,8,15,0.8)), url('https://www.meupositivo.com.br/doseujeito/wp-content/uploads/2025/06/chip-ia-hardware.webp');
+            background: linear-gradient(rgba(0,8,15,0.8), rgba(0,8,15,0.8)), 
+                        url('https://www.meupositivo.com.br/doseujeito/wp-content/uploads/2025/06/chip-ia-hardware.webp');
             background-size: cover; background-position: center; background-attachment: fixed;
             color: #fff; overflow-x: hidden;
         }
 
-        /* --- CABEÇALHO FORMATO IMAGEM --- */
+        /* --- CABEÇALHO FORMATO EXATO (LOGO ESQUERDA, TEXTO COLUNA, CARRINHO DIREITA) --- */
         header {
-            position: fixed; top: 0; width: 100%; height: 80px;
-            padding: 0 15px;
-            background: #000; /* Fundo preto sólido como na imagem */
+            position: fixed; top: 0; width: 100%;
+            padding: 10px 12px;
+            background: #000;
             display: flex; justify-content: space-between; align-items: center; 
             z-index: 1000; border-bottom: 1px solid var(--border);
+            min-height: 70px;
         }
 
-        /* Bloco da Esquerda (Logo + Textos) */
-        .header-left {
+        .header-left-group {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            max-width: 80%;
         }
 
         .logo-img { 
-            width: 50px; 
-            height: 50px; 
-            border-radius: 50%; 
-            filter: drop-shadow(0 0 8px var(--accent));
-            object-fit: cover;
+            width: 45px; height: 45px; border-radius: 50%; 
+            filter: drop-shadow(0 0 8px var(--accent)); object-fit: cover; flex-shrink: 0;
         }
 
-        /* Container do Nome e do Menu */
         .brand-info {
             display: flex;
-            flex-direction: column; /* Faz ficar um embaixo do outro */
+            flex-direction: column;
             justify-content: center;
         }
 
         .logo-text { 
-            font-family: 'Syncopate', sans-serif; 
-            color: #fff; 
-            font-size: 0.9rem; 
-            font-weight: 700; 
-            letter-spacing: 1px;
-            line-height: 1.2;
+            font-family: 'Syncopate', sans-serif; color: #fff; 
+            font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
+            line-height: 1.1;
         }
 
-        nav { 
-            display: flex; 
-            gap: 10px; 
-            margin-top: 4px;
-        }
-        
+        nav { display: flex; gap: 8px; margin-top: 4px; }
         nav a { 
-            color: #fff; 
-            text-decoration: none; 
-            font-size: 0.65rem; 
-            font-weight: 700; 
-            text-transform: uppercase;
+            color: #aaa; text-decoration: none; font-size: 0.52rem; 
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
         }
 
-        /* Botão do Carrinho na Direita */
         .cart-icon-btn {
             background: none; border: none; color: var(--accent); 
-            cursor: pointer; position: relative; font-size: 1.2rem;
+            cursor: pointer; position: relative; font-size: 1.2rem; padding: 5px;
         }
         #cart-count {
-            position: absolute; top: -8px; right: -8px; background: #ff0055; color: #fff;
-            font-size: 0.6rem; width: 16px; height: 16px; border-radius: 50%; 
+            position: absolute; top: -2px; right: -2px; background: #ff0055; color: #fff;
+            font-size: 0.55rem; width: 15px; height: 15px; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
 
-        /* Ajuste para telas maiores */
         @media (min-width: 768px) {
-            .logo-text { font-size: 1.2rem; }
-            nav { gap: 20px; }
-            nav a { font-size: 0.8rem; }
+            header { padding: 0 40px; height: 80px; }
+            .logo-text { font-size: 1.1rem; }
+            .logo-img { width: 55px; height: 55px; }
+            nav { gap: 15px; }
+            nav a { font-size: 0.7rem; }
         }
 
-        /* --- RESTO DO SITE --- */
-        section { padding: 120px 20px 40px; display: flex; flex-direction: column; align-items: center; }
-        .section-title { font-family: 'Syncopate', sans-serif; font-size: 1.2rem; margin-bottom: 40px; color: var(--accent); text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
-        .card { background: var(--card-glass); padding: 20px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
-        .product-img { width: 100%; height: 180px; object-fit: contain; background: #fff; border-radius: 5px; margin-bottom: 15px; padding: 10px; }
-        .price { font-size: 1.3rem; font-weight: 700; color: var(--accent); margin: 10px 0; display: block; }
-        .btn { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--accent); color: var(--accent); font-weight: 700; cursor: pointer; font-size: 0.7rem; }
-        .btn:hover { background: var(--accent); color: #000; }
+        /* --- GRID E CARDS --- */
+        section { padding: 100px 15px 60px; display: flex; flex-direction: column; align-items: center; }
+        .section-title { font-family: 'Syncopate', sans-serif; font-size: 1.1rem; margin-bottom: 30px; color: var(--accent); letter-spacing: 3px; }
 
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; width: 100%; max-width: 1200px; }
+        
+        .card { 
+            background: var(--card-glass); padding: 12px; border-radius: 8px; 
+            border: 1px solid var(--border); text-align: center; display: flex; flex-direction: column;
+        }
+        .product-img { width: 100%; height: 140px; object-fit: contain; background: #fff; border-radius: 5px; margin-bottom: 10px; padding: 5px; }
+        .card h3 { font-size: 0.7rem; margin-bottom: 5px; }
+        .price { font-size: 1rem; font-weight: 700; color: var(--accent); margin: 5px 0; }
+        
+        .btn { width: 100%; padding: 10px; background: transparent; border: 1px solid var(--accent); color: var(--accent); font-weight: 700; cursor: pointer; font-size: 0.6rem; text-transform: uppercase; }
+        .btn-add { border-color: rgba(0, 242, 255, 0.3); color: #888; margin-top: 5px; }
+
+        /* --- SIDEBAR CARRINHO --- */
         #cart-sidebar {
             position: fixed; right: -100%; top: 0; width: 100%; max-width: 350px; height: 100%;
             background: #050505; border-left: 1px solid var(--accent); z-index: 2001;
-            transition: 0.4s; padding: 25px; display: flex; flex-direction: column;
+            transition: 0.3s; padding: 20px; display: flex; flex-direction: column;
         }
         #cart-sidebar.active { right: 0; }
-        .cart-items-list { flex-grow: 1; overflow-y: auto; margin-top: 20px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px; font-size: 0.8rem; }
-        .remove-btn { color: #ff4444; background: none; border: none; cursor: pointer; }
+        .cart-items-list { flex-grow: 1; overflow-y: auto; }
+        .cart-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #222; align-items: center; }
+        .cart-item img { width: 40px; height: 40px; background: #fff; border-radius: 4px; }
+        .cart-item-info h4 { font-size: 0.7rem; }
 
         #payment-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; padding: 20px; overflow-y: auto; }
         .payment-content { max-width: 450px; margin: 0 auto; background: #050505; border: 1px solid var(--accent); padding: 20px; border-radius: 10px; }
-        input { width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid #333; color: #fff; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-left">
-            <!-- LOGO IMAGEM -->
+        <div class="header-left-group">
             <img src="https://i.gifer.com/origin/c9/c97052cf6ec794a3c11e7ecc88f7fe52_w200.gif" alt="Logo" class="logo-img">
-            
-            <!-- BLOCO DE TEXTO AO LADO DO LOGO -->
             <div class="brand-info">
                 <div class="logo-text">TECHNOCYBBER</div>
                 <nav>
@@ -142,8 +134,6 @@
                 </nav>
             </div>
         </div>
-
-        <!-- CARRINHO NA DIREITA -->
         <button class="cart-icon-btn" onclick="toggleCart()">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count">0</span>
@@ -151,43 +141,39 @@
     </header>
 
     <div id="cart-sidebar">
-        <h2 class="section-title" style="font-size: 1rem;">CARRINHO</h2>
-        <button onclick="toggleCart()" class="btn" style="border-color: #444; margin-bottom: 20px;">FECHAR</button>
+        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2 style="font-size: 0.8rem; font-family: 'Syncopate'; color: var(--accent);">CARRINHO</h2>
+            <button onclick="toggleCart()" style="background:none; border:1px solid #333; color:#fff; padding:5px 10px; cursor:pointer; font-size:0.6rem;">FECHAR</button>
+        </div>
         <div class="cart-items-list" id="cart-items"></div>
-        <div style="border-top: 1px solid var(--accent); padding-top: 15px;">
-            <p style="display: flex; justify-content: space-between;">TOTAL: <span id="cart-total" style="color: var(--accent); font-weight: bold;">R$ 0,00</span></p>
-            <button onclick="irParaCheckout()" class="btn" style="margin-top: 15px; background: var(--accent); color: #000;">FINALIZAR COMPRA</button>
+        <div id="cart-footer" style="display:none; border-top:1px solid var(--accent); padding-top:15px; margin-top:10px;">
+            <div style="display:flex; justify-content: space-between; margin-bottom:15px;">
+                <span style="font-size:0.7rem;">TOTAL</span>
+                <span id="cart-total" style="color:var(--accent); font-weight:bold;">R$ 0,00</span>
+            </div>
+            <button onclick="irParaCheckout()" class="btn" style="background:var(--accent); color:#000;">FINALIZAR COMPRA</button>
         </div>
     </div>
 
-    <!-- SEÇÃO LOJA (PRODUTOS) -->
+    <section id="home" style="height: 60vh; justify-content: center; text-align: center;">
+        <h1 style="font-family: 'Syncopate'; font-size: clamp(1.5rem, 5vw, 3rem); letter-spacing: 10px;">TECHNOCYBBER</h1>
+        <p style="color: var(--accent); font-size: 0.7rem; border: 1px solid var(--accent); padding: 5px 15px; display: inline-block; margin-top: 10px;">ELITE HARDWARE STORE</p>
+    </section>
+
     <section id="loja">
         <h2 class="section-title">HARDWARE ELITE</h2>
-        <div class="grid">
-            <div class="card">
-                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_716038-MLU78929255715_092024-F.webp" class="product-img">
-                <h3>RTX 3080 OC 10GB</h3>
-                <span class="price">R$ 7.000,00</span>
-                <button onclick="adicionarAoCarrinho('RTX 3080 OC', 7000.00)" class="btn">ADICIONAR</button>
-            </div>
-            <div class="card">
-                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_977430-MLA104860898285_012026-F.webp" class="product-img">
-                <h3>TECLADO MECÂNICO RGB</h3>
-                <span class="price">R$ 850,00</span>
-                <button onclick="adicionarAoCarrinho('Teclado Mecânico RGB', 850.00)" class="btn">ADICIONAR</button>
-            </div>
-            <!-- ... demais produtos seguem a mesma lógica ... -->
+        <div class="grid" id="grid-produtos">
+            <!-- Os produtos serão gerados aqui ou mantidos como você fez -->
         </div>
     </section>
 
-    <!-- MODAL PAGAMENTO -->
     <div id="payment-modal">
         <div class="payment-content">
-            <button onclick="fecharModal()" class="btn" style="margin-bottom:20px; width:auto;">← VOLTAR</button>
+            <button onclick="fecharModal()" class="btn" style="width:auto; margin-bottom:20px;">← VOLTAR</button>
             <div id="email-step">
-                <h3 style="font-size: 0.8rem; margin-bottom:10px; color:var(--accent);">E-MAIL PARA RECIBO:</h3>
-                <input type="email" id="input-email-cliente" placeholder="seu@email.com">
-                <button onclick="validarEIniciarCheckoutMP()" class="btn" style="background:var(--accent); color:#000;">PROSSEGUIR</button>
+                <h3 style="font-size:0.7rem; color:var(--accent); margin-bottom:10px;">INFORME SEU E-MAIL</h3>
+                <input type="email" id="input-email-cliente" style="width:100%; padding:10px; background:#111; border:1px solid var(--accent); color:#fff;" placeholder="seu@email.com">
+                <button onclick="validarEIniciarCheckoutMP()" class="btn" style="margin-top:10px; background:var(--accent); color:#000;">PROSSEGUIR</button>
             </div>
             <div id="paymentBrick_container"></div>
         </div>
@@ -195,75 +181,126 @@
 
     <script>
         const mp = new MercadoPago('APP_USR-75a7db7d-cf21-488b-afcc-c46d03085ded');
-        let carrinho = JSON.parse(localStorage.getItem('techno_cart')) || [];
+        let carrinho = JSON.parse(localStorage.getItem('tech_cart')) || [];
+        let totalGlobal = 0;
+        let nomesGlobal = "";
+
+        const produtos = [
+            { id: 1, nome: 'RTX 3080 OC 10GB', preco: 7000.00, img: 'https://http2.mlstatic.com/D_NQ_NP_2X_716038-MLU78929255715_092024-F.webp' },
+            { id: 2, nome: 'TECLADO MECÂNICO RGB', preco: 850.00, img: 'https://http2.mlstatic.com/D_NQ_NP_2X_977430-MLA104860898285_012026-F.webp' },
+            { id: 3, nome: 'MOTHERBOARD X670E', preco: 4250.00, img: 'https://m.media-amazon.com/images/I/71Dq8+22SwL._AC_SX679_.jpg' },
+            { id: 4, nome: 'HEADSET HI-RES 7.1', preco: 1000.00, img: 'https://m.media-amazon.com/images/I/610sKT7xhPL._AC_SX679_.jpg' },
+            { id: 5, nome: 'SSD NVME GEN5 2TB', preco: 5500.00, img: 'https://m.media-amazon.com/images/I/51+dzbnWF9L._AC_SX679_.jpg' },
+            { id: 6, nome: 'RAM 32GB DDR5', preco: 5550.00, img: 'https://m.media-amazon.com/images/I/61XsKRKsGoL._AC_SX679_.jpg' },
+            { id: 7, nome: 'PC GAMER RYZEN 5', preco: 6500.00, img: 'https://http2.mlstatic.com/D_NQ_NP_2X_647266-MLB86683348094_062025-F.webp' },
+            { id: 8, nome: 'CENTRAL DE JOGOS', preco: 300.00, img: 'https://tse4.mm.bing.net/th/id/OIP.YVrwoGyy78h3c4L4rba-hAHaEK?pid=ImgDet&w=474&h=266&rs=1&o=7&rm=3' }
+        ];
+
+        function renderProdutos() {
+            const grid = document.getElementById('grid-produtos');
+            grid.innerHTML = produtos.map(p => `
+                <div class="card">
+                    <img src="${p.img}" class="product-img">
+                    <h3>${p.nome}</h3>
+                    <span class="price">R$ ${p.preco.toLocaleString('pt-br', {minimumFractionDigits:2})}</span>
+                    <button onclick="comprarDireto('${p.nome}', ${p.preco})" class="btn">COMPRAR AGORA</button>
+                    <button onclick="addCarrinho('${p.nome}', ${p.preco}, '${p.img}')" class="btn btn-add">+ CARRINHO</button>
+                </div>
+            `).join('');
+        }
 
         function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('active'); }
 
-        function adicionarAoCarrinho(nome, preco) {
-            carrinho.push({ nome, preco });
-            atualizarCarrinhoUI();
-            alert(nome + " adicionado!");
+        function addCarrinho(nome, preco, img) {
+            const item = carrinho.find(i => i.nome === nome);
+            if(item) item.qtd++; else carrinho.push({nome, preco, img, qtd: 1});
+            updateCarrinho();
         }
 
-        function removerDoCarrinho(index) {
-            carrinho.splice(index, 1);
-            atualizarCarrinhoUI();
-        }
-
-        function atualizarCarrinhoUI() {
-            localStorage.setItem('techno_cart', JSON.stringify(carrinho));
-            const listEl = document.getElementById('cart-items');
-            const countEl = document.getElementById('cart-count');
+        function updateCarrinho() {
+            localStorage.setItem('tech_cart', JSON.stringify(carrinho));
+            const list = document.getElementById('cart-items');
             const totalEl = document.getElementById('cart-total');
-            listEl.innerHTML = '';
+            const countEl = document.getElementById('cart-count');
+            const footer = document.getElementById('cart-footer');
+
+            if(carrinho.length === 0) {
+                list.innerHTML = '<p style="text-align:center; font-size:0.6rem; color:#555; margin-top:20px;">VAZIO</p>';
+                footer.style.display = 'none';
+                countEl.innerText = 0;
+                return;
+            }
+
+            footer.style.display = 'block';
             let total = 0;
-            carrinho.forEach((item, index) => {
-                total += item.preco;
-                listEl.innerHTML += `<div class="cart-item"><div>${item.nome}<br>R$ ${item.preco.toFixed(2)}</div><button class="remove-btn" onclick="removerDoCarrinho(${index})">remover</button></div>`;
-            });
-            countEl.innerText = carrinho.length;
-            totalEl.innerText = `R$ ${total.toFixed(2)}`;
+            let qtdTotal = 0;
+            list.innerHTML = carrinho.map((item, idx) => {
+                total += item.preco * item.qtd;
+                qtdTotal += item.qtd;
+                return `<div class="cart-item">
+                    <img src="${item.img}">
+                    <div class="cart-item-info" style="flex:1">
+                        <h4>${item.nome}</h4>
+                        <p style="color:var(--accent); font-size:0.7rem;">${item.qtd}x R$ ${item.preco.toFixed(2)}</p>
+                    </div>
+                    <button onclick="remover(${idx})" style="background:none; border:none; color:red; cursor:pointer;">✕</button>
+                </div>`;
+            }).join('');
+            
+            countEl.innerText = qtdTotal;
+            totalEl.innerText = `R$ ${total.toLocaleString('pt-br', {minimumFractionDigits:2})}`;
+            totalGlobal = total;
+            nomesGlobal = carrinho.map(c => `${c.qtd}x ${c.nome}`).join(', ');
         }
 
-        function irParaCheckout() {
-            if (carrinho.length === 0) return alert("Carrinho vazio!");
-            toggleCart();
+        function remover(idx) { carrinho.splice(idx, 1); updateCarrinho(); }
+
+        function comprarDireto(nome, preco) {
+            totalGlobal = preco;
+            nomesGlobal = nome;
+            abrirModal();
+        }
+
+        function irParaCheckout() { toggleCart(); abrirModal(); }
+
+        function abrirModal() {
             document.getElementById('payment-modal').style.display = 'block';
+            document.getElementById('email-step').style.display = 'block';
+            document.getElementById('paymentBrick_container').innerHTML = '';
         }
 
-        function fecharModal() {
+        function fecharModal() { 
             document.getElementById('payment-modal').style.display = 'none';
             if (window.paymentBrickController) window.paymentBrickController.unmount();
         }
 
         async function validarEIniciarCheckoutMP() {
             const email = document.getElementById('input-email-cliente').value;
-            if (!email.includes("@")) return alert("E-mail inválido");
+            if(!email.includes('@')) return alert("E-mail inválido");
             document.getElementById('email-step').style.display = 'none';
-            const totalCompra = carrinho.reduce((acc, i) => acc + i.preco, 0);
-            const resumo = carrinho.map(i => i.nome).join(', ');
 
             const bricksBuilder = mp.bricks();
             window.paymentBrickController = await bricksBuilder.create('payment', 'paymentBrick_container', {
-                initialization: { amount: totalCompra, payer: { email } },
-                customization: { paymentMethods: { ticket: "all", bankTransfer: "all", creditCard: "all" } },
+                initialization: { amount: totalGlobal, payer: { email } },
                 callbacks: {
                     onSubmit: ({ formData }) => {
                         return fetch("/api/finalizar", {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ ...formData, produto: resumo, valor: totalCompra })
+                            body: JSON.stringify({ ...formData, produto: nomesGlobal, valor: totalGlobal })
                         }).then(r => r.json()).then(res => {
-                            if (res.status === 'approved') {
-                                alert("Sucesso!");
-                                carrinho = []; atualizarCarrinhoUI(); location.reload();
+                            if(res.status === 'approved') {
+                                alert("Pagamento aprovado!");
+                                carrinho = []; updateCarrinho(); location.reload();
                             }
                         });
                     }
                 }
             });
         }
-        atualizarCarrinhoUI();
+
+        renderProdutos();
+        updateCarrinho();
     </script>
 </body>
 </html>
