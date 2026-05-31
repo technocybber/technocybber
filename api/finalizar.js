@@ -23,7 +23,14 @@ module.exports = async (req, res) => {
         const payment = new Payment(client);
 
         // 2. Cria o pagamento
-        const response = await payment.create({ body: req.body });
+       const body = {
+    ...req.body,
+    payer: {
+        ...req.body.payer,
+        entity_type: 'individual'
+    }
+};
+const response = await payment.create({ body });
 
         // 3. Tenta enviar o e-mail (mas não trava se o e-mail falhar)
         try {
