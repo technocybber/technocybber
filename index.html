@@ -31,28 +31,30 @@
         /* CABEÇALHO */
         header {
             position: fixed; top: 0; width: 100%;
-            padding: 10px 15px;
+            padding: 8px 50px 8px 15px; /* padding direito para não sobrepor carrinho */
             background: #000;
             display: flex;
             align-items: center;
-            justify-content: center; /* centraliza tudo */
+            justify-content: center;
             z-index: 1000;
             border-bottom: 1px solid var(--border);
             min-height: 70px;
         }
 
-        /* Bloco central com logo+nome e nav */
+        /* Bloco central: duas linhas empilhadas e centralizadas */
         .header-center {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
+            width: 100%;
         }
 
-        /* Logo + Nome na mesma linha */
+        /* Linha 1: Logo + Nome centralizados */
         .header-left {
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
         }
 
@@ -63,18 +65,18 @@
 
         .logo-text { 
             font-family: 'Syncopate', sans-serif; color: #fff; 
-            font-size: 1rem; font-weight: 700; letter-spacing: 2px;
+            font-size: 1rem; font-weight: 700; letter-spacing: 2px; white-space: nowrap;
         }
 
-        /* Nav centralizada abaixo */
-        nav { display: flex; gap: 14px; justify-content: center; }
+        /* Linha 2: Nav centralizada */
+        nav { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
         nav a { 
             color: #aaa; text-decoration: none; font-size: 0.62rem; 
             font-weight: 700; text-transform: uppercase; transition: 0.2s; letter-spacing: 1px;
         }
         nav a:hover { color: var(--accent); }
 
-        /* Carrinho posicionado absolutamente à direita */
+        /* Carrinho fixo à direita */
         .cart-icon-btn {
             background: none; border: none; color: var(--accent); 
             cursor: pointer; position: absolute; right: 15px; top: 50%;
@@ -88,7 +90,7 @@
         }
 
         @media (min-width: 768px) {
-            header { padding: 0 30px; min-height: 80px; }
+            header { padding: 0 70px 0 30px; min-height: 80px; }
             .logo-img { width: 56px; height: 56px; }
             .logo-text { font-size: 1.2rem; }
             nav { gap: 22px; }
@@ -223,15 +225,13 @@
 <body>
 
     <header>
-        <!-- Espaço vazio para balancear o carrinho à direita -->
-        <div style="width:40px; flex-shrink:0;"></div>
-
-        <!-- Centro: logo + nome + nav -->
         <div class="header-center">
+            <!-- LINHA 1: Logo + Nome -->
             <div class="header-left">
                 <img src="https://i.gifer.com/origin/c9/c97052cf6ec794a3c11e7ecc88f7fe52_w200.gif" alt="Logo" class="logo-img">
                 <div class="logo-text">TECHNOCYBBER</div>
             </div>
+            <!-- LINHA 2: Nav -->
             <nav>
                 <a href="#home">HOME</a>
                 <a href="#loja">LOJA</a>
@@ -239,8 +239,7 @@
                 <a href="#contato">CONTATO</a>
             </nav>
         </div>
-
-        <!-- Carrinho à direita -->
+        <!-- Carrinho fixo à direita -->
         <button class="cart-icon-btn" onclick="toggleCart()">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count">0</span>
