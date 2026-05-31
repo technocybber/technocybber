@@ -28,279 +28,540 @@
             color: #fff; overflow-x: hidden;
         }
 
-        /* --- CABEÇALHO FORMATO EXATO (LOGO ESQUERDA, TEXTO COLUNA, CARRINHO DIREITA) --- */
+        /* CABEÇALHO */
         header {
             position: fixed; top: 0; width: 100%;
-            padding: 10px 12px;
+            padding: 10px 15px;
             background: #000;
-            display: flex; justify-content: space-between; align-items: center; 
-            z-index: 1000; border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center; /* centraliza tudo */
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
             min-height: 70px;
         }
 
-        .header-left-group {
+        /* Bloco central com logo+nome e nav */
+        .header-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Logo + Nome na mesma linha */
+        .header-left {
             display: flex;
             align-items: center;
-            gap: 10px;
-            max-width: 80%;
+            gap: 12px;
         }
 
         .logo-img { 
-            width: 45px; height: 45px; border-radius: 50%; 
+            width: 52px; height: 52px; border-radius: 50%; 
             filter: drop-shadow(0 0 8px var(--accent)); object-fit: cover; flex-shrink: 0;
-        }
-
-        .brand-info {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
         .logo-text { 
             font-family: 'Syncopate', sans-serif; color: #fff; 
-            font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px;
-            line-height: 1.1;
+            font-size: 1rem; font-weight: 700; letter-spacing: 2px;
         }
 
-        nav { display: flex; gap: 8px; margin-top: 4px; }
+        /* Nav centralizada abaixo */
+        nav { display: flex; gap: 14px; justify-content: center; }
         nav a { 
-            color: #aaa; text-decoration: none; font-size: 0.52rem; 
-            font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px;
+            color: #aaa; text-decoration: none; font-size: 0.62rem; 
+            font-weight: 700; text-transform: uppercase; transition: 0.2s; letter-spacing: 1px;
         }
+        nav a:hover { color: var(--accent); }
 
+        /* Carrinho posicionado absolutamente à direita */
         .cart-icon-btn {
             background: none; border: none; color: var(--accent); 
-            cursor: pointer; position: relative; font-size: 1.2rem; padding: 5px;
+            cursor: pointer; position: absolute; right: 15px; top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem; padding: 5px;
         }
         #cart-count {
-            position: absolute; top: -2px; right: -2px; background: #ff0055; color: #fff;
-            font-size: 0.55rem; width: 15px; height: 15px; border-radius: 50%; 
+            position: absolute; top: -6px; right: -6px; background: #ff0055; color: #fff;
+            font-size: 0.55rem; width: 16px; height: 16px; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
 
         @media (min-width: 768px) {
-            header { padding: 0 40px; height: 80px; }
-            .logo-text { font-size: 1.1rem; }
-            .logo-img { width: 55px; height: 55px; }
-            nav { gap: 15px; }
-            nav a { font-size: 0.7rem; }
+            header { padding: 0 30px; min-height: 80px; }
+            .logo-img { width: 56px; height: 56px; }
+            .logo-text { font-size: 1.2rem; }
+            nav { gap: 22px; }
+            nav a { font-size: 0.75rem; }
+            .cart-icon-btn { font-size: 1.5rem; right: 30px; }
         }
 
-        /* --- GRID E CARDS --- */
-        section { padding: 100px 15px 60px; display: flex; flex-direction: column; align-items: center; }
-        .section-title { font-family: 'Syncopate', sans-serif; font-size: 1.1rem; margin-bottom: 30px; color: var(--accent); letter-spacing: 3px; }
+        /* HERO */
+        #home {
+            height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 80px 20px 0;
+        }
+        #home h1 { 
+            font-family: 'Syncopate', sans-serif; 
+            font-size: clamp(1.6rem, 7vw, 3.5rem); 
+            letter-spacing: clamp(6px, 2vw, 18px); margin-bottom: 20px;
+        }
+        .hero-subtitle { 
+            font-size: clamp(0.6rem, 2vw, 0.8rem); color: var(--accent); 
+            letter-spacing: 3px; padding: 10px 20px; border: 1px solid var(--accent); 
+            text-transform: uppercase; background: rgba(0,0,0,0.4); 
+        }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; width: 100%; max-width: 1200px; }
+        /* SEÇÕES */
+        section { padding: 100px 20px 60px; display: flex; flex-direction: column; align-items: center; }
+        .section-title { 
+            font-family: 'Syncopate', sans-serif; font-size: clamp(1rem, 3vw, 1.4rem); 
+            margin-bottom: 35px; color: var(--accent); text-align: center; letter-spacing: 4px;
+        }
+
+        /* GRID */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
         
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+        }
+        @media (max-width: 380px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        /* CARD */
         .card { 
-            background: var(--card-glass); padding: 12px; border-radius: 8px; 
-            border: 1px solid var(--border); text-align: center; display: flex; flex-direction: column;
+            background: var(--card-glass); padding: 15px; border-radius: 8px; 
+            border: 1px solid var(--border); text-align: center;
+            display: flex; flex-direction: column; transition: 0.3s;
         }
-        .product-img { width: 100%; height: 140px; object-fit: contain; background: #fff; border-radius: 5px; margin-bottom: 10px; padding: 5px; }
-        .card h3 { font-size: 0.7rem; margin-bottom: 5px; }
-        .price { font-size: 1rem; font-weight: 700; color: var(--accent); margin: 5px 0; }
+        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .product-img { 
+            width: 100%; height: 160px; object-fit: contain; 
+            background: #fff; border-radius: 5px; margin-bottom: 12px; padding: 8px;
+        }
+        .card h3 { font-size: 0.75rem; letter-spacing: 0.5px; margin-bottom: 6px; line-height: 1.3; }
+        .card p { font-size: 0.65rem; color: #999; flex-grow: 1; margin-bottom: 8px; }
+        .price { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin: 8px 0; display: block; }
         
-        .btn { width: 100%; padding: 10px; background: transparent; border: 1px solid var(--accent); color: var(--accent); font-weight: 700; cursor: pointer; font-size: 0.6rem; text-transform: uppercase; }
-        .btn-add { border-color: rgba(0, 242, 255, 0.3); color: #888; margin-top: 5px; }
+        .btn { 
+            width: 100%; padding: 11px; background: transparent; 
+            border: 1px solid var(--accent); color: var(--accent); 
+            font-weight: 700; cursor: pointer; font-size: 0.65rem; 
+            letter-spacing: 1px; transition: 0.3s; margin-top: 6px;
+        }
+        .btn:hover { background: var(--accent); color: #000; }
+        .btn-add { 
+            width: 100%; padding: 11px; background: transparent; 
+            border: 1px solid rgba(0, 242, 255, 0.4); color: #aaa; 
+            font-weight: 700; cursor: pointer; font-size: 0.65rem; 
+            letter-spacing: 1px; transition: 0.3s; margin-top: 4px;
+        }
+        .btn-add:hover, .btn-add.added { background: rgba(0,242,255,0.1); color: var(--accent); border-color: var(--accent); }
 
-        /* --- SIDEBAR CARRINHO --- */
+        /* SIDEBAR CARRINHO */
         #cart-sidebar {
-            position: fixed; right: -100%; top: 0; width: 100%; max-width: 350px; height: 100%;
+            position: fixed; right: -100%; top: 0; width: 100%; max-width: 360px; height: 100%;
             background: #050505; border-left: 1px solid var(--accent); z-index: 2001;
-            transition: 0.3s; padding: 20px; display: flex; flex-direction: column;
+            transition: 0.35s ease; padding: 20px; display: flex; flex-direction: column;
+            overflow: hidden;
         }
         #cart-sidebar.active { right: 0; }
-        .cart-items-list { flex-grow: 1; overflow-y: auto; }
-        .cart-item { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid #222; align-items: center; }
-        .cart-item img { width: 40px; height: 40px; background: #fff; border-radius: 4px; }
-        .cart-item-info h4 { font-size: 0.7rem; }
+        .cart-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .cart-header-row h2 { font-family: 'Syncopate', sans-serif; font-size: 0.9rem; color: var(--accent); letter-spacing: 3px; }
+        .close-cart-btn { background: none; border: 1px solid #333; color: #fff; padding: 6px 12px; cursor: pointer; font-size: 0.7rem; }
+        .close-cart-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-        #payment-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; padding: 20px; overflow-y: auto; }
+        .cart-items-list { flex-grow: 1; overflow-y: auto; }
+        .cart-item { 
+            display: flex; gap: 10px; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid #1a1a2e; 
+        }
+        .cart-item img { width: 55px; height: 55px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px; flex-shrink: 0; }
+        .cart-item-info { flex: 1; }
+        .cart-item-info h4 { font-size: 0.7rem; margin-bottom: 3px; }
+        .cart-item-info .item-price { font-size: 0.85rem; color: var(--accent); font-weight: 700; }
+        .cart-item-qty { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+        .qty-btn { background: transparent; border: 1px solid #333; color: #fff; width: 24px; height: 24px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
+        .qty-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .remove-btn { color: #ff4444; background: none; border: none; cursor: pointer; font-size: 0.65rem; margin-left: 4px; }
+
+        .cart-empty { text-align: center; color: #444; font-size: 0.75rem; padding: 40px 0; letter-spacing: 2px; }
+
+        .cart-footer { border-top: 1px solid var(--accent); padding-top: 15px; margin-top: 10px; }
+        .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .cart-total-label { font-size: 0.7rem; color: #aaa; letter-spacing: 2px; }
+        .cart-total-value { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+
+        /* MODAL PAGAMENTO */
+        #payment-modal { 
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.96); z-index: 9999; padding: 20px; overflow-y: auto; 
+        }
         .payment-content { max-width: 450px; margin: 0 auto; background: #050505; border: 1px solid var(--accent); padding: 20px; border-radius: 10px; }
+        #email-step { text-align: center; margin-bottom: 20px; }
+        #email-step h3 { color: var(--accent); margin-bottom: 12px; font-family: 'Syncopate', sans-serif; font-size: 0.75rem; letter-spacing: 2px; }
+        #email-step input { width: 100%; padding: 13px; margin-bottom: 10px; background: #111; border: 1px solid var(--accent); color: #fff; outline: none; font-family: 'Inter', sans-serif; }
+
+        /* FORMULÁRIO CONTATO */
+        .form-container { width: 100%; max-width: 450px; background: rgba(0,0,0,0.85); padding: 25px 20px; border: 1px solid var(--border); border-radius: 10px; }
+        input[type="text"], input[type="email"], select, textarea { 
+            width: 100%; padding: 12px; margin-bottom: 12px; background: #0a0a0a; 
+            border: 1px solid #333; color: #fff; outline: none; font-size: 0.85rem; font-family: 'Inter', sans-serif; 
+        }
+        textarea { resize: vertical; min-height: 90px; }
+
+        /* SERVIÇOS */
+        .service-card { background: var(--card-glass); padding: 25px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
+        .service-card h3 { font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 10px; color: var(--accent); }
+        .service-card p { font-size: 0.75rem; color: #bbb; }
+
+        footer { padding: 25px 20px; text-align: center; font-size: 0.55rem; color: #555; border-top: 1px solid #111; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-left-group">
-            <img src="https://i.gifer.com/origin/c9/c97052cf6ec794a3c11e7ecc88f7fe52_w200.gif" alt="Logo" class="logo-img">
-            <div class="brand-info">
+        <!-- Espaço vazio para balancear o carrinho à direita -->
+        <div style="width:40px; flex-shrink:0;"></div>
+
+        <!-- Centro: logo + nome + nav -->
+        <div class="header-center">
+            <div class="header-left">
+                <img src="https://i.gifer.com/origin/c9/c97052cf6ec794a3c11e7ecc88f7fe52_w200.gif" alt="Logo" class="logo-img">
                 <div class="logo-text">TECHNOCYBBER</div>
-                <nav>
-                    <a href="#home">HOME</a>
-                    <a href="#loja">LOJA</a>
-                    <a href="#servicos">SERVIÇOS</a>
-                    <a href="#contato">CONTATO</a>
-                </nav>
             </div>
+            <nav>
+                <a href="#home">HOME</a>
+                <a href="#loja">LOJA</a>
+                <a href="#servicos">SERVIÇOS</a>
+                <a href="#contato">CONTATO</a>
+            </nav>
         </div>
+
+        <!-- Carrinho à direita -->
         <button class="cart-icon-btn" onclick="toggleCart()">
             <i class="fas fa-shopping-cart"></i>
             <span id="cart-count">0</span>
         </button>
     </header>
 
+    <!-- SIDEBAR CARRINHO -->
     <div id="cart-sidebar">
-        <div style="display:flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h2 style="font-size: 0.8rem; font-family: 'Syncopate'; color: var(--accent);">CARRINHO</h2>
-            <button onclick="toggleCart()" style="background:none; border:1px solid #333; color:#fff; padding:5px 10px; cursor:pointer; font-size:0.6rem;">FECHAR</button>
+        <div class="cart-header-row">
+            <h2>🛒 CARRINHO</h2>
+            <button class="close-cart-btn" onclick="toggleCart()">✕ FECHAR</button>
         </div>
-        <div class="cart-items-list" id="cart-items"></div>
-        <div id="cart-footer" style="display:none; border-top:1px solid var(--accent); padding-top:15px; margin-top:10px;">
-            <div style="display:flex; justify-content: space-between; margin-bottom:15px;">
-                <span style="font-size:0.7rem;">TOTAL</span>
-                <span id="cart-total" style="color:var(--accent); font-weight:bold;">R$ 0,00</span>
+        <div class="cart-items-list" id="cart-items">
+            <p class="cart-empty">CARRINHO VAZIO</p>
+        </div>
+        <div class="cart-footer" id="cart-footer" style="display:none;">
+            <div class="cart-total-row">
+                <span class="cart-total-label">TOTAL</span>
+                <span class="cart-total-value" id="cart-total">R$ 0,00</span>
             </div>
-            <button onclick="irParaCheckout()" class="btn" style="background:var(--accent); color:#000;">FINALIZAR COMPRA</button>
+            <button onclick="irParaCheckout()" class="btn" style="background: var(--accent); color: #000; font-size: 0.75rem;">FINALIZAR COMPRA</button>
         </div>
     </div>
 
-    <section id="home" style="height: 60vh; justify-content: center; text-align: center;">
-        <h1 style="font-family: 'Syncopate'; font-size: clamp(1.5rem, 5vw, 3rem); letter-spacing: 10px;">TECHNOCYBBER</h1>
-        <p style="color: var(--accent); font-size: 0.7rem; border: 1px solid var(--accent); padding: 5px 15px; display: inline-block; margin-top: 10px;">ELITE HARDWARE STORE</p>
+    <!-- HOME -->
+    <section id="home">
+        <h1>TECHNOCYBBER</h1>
+        <p class="hero-subtitle">SOLUÇÕES EM TI | HIGH-PERFORMANCE</p>
     </section>
 
+    <!-- LOJA -->
     <section id="loja">
         <h2 class="section-title">HARDWARE ELITE</h2>
-        <div class="grid" id="grid-produtos">
-            <!-- Os produtos serão gerados aqui ou mantidos como você fez -->
+        <div class="grid">
+
+            <div class="card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_716038-MLU78929255715_092024-F.webp" class="product-img">
+                <h3>RTX 3080 OC 10GB GDDR6X</h3>
+                <p>Performance máxima em 4K e IA de última geração.</p>
+                <span class="price">R$ 7.000,00</span>
+                <button onclick="comprarAgora('RTX 3080 OC', 7000.00)" class="btn">COMPRAR AGORA</button>
+                <button onclick="adicionarAoCarrinho('RTX 3080 OC', 7000.00, 'https://http2.mlstatic.com/D_NQ_NP_2X_716038-MLU78929255715_092024-F.webp', this)" class="btn-add">+ CARRINHO</button>
+            </div>
+
+            <div class="card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_977430-MLA104860898285_012026-F.webp" class="product-img">
+                <h3>TECLADO MECÂNICO RGB</h3>
+                <p>Switches ópticos ultra-rápidos e construção premium.</p>
+                <span class="price">R$ 850,00</span>
+                <button onclick="comprarAgora('Teclado Mecânico RGB', 850.00)" class="btn">COMPRAR AGORA</button>
+                <button onclick="adicionarAoCarrinho('Teclado Mecânico RGB', 850.00, 'https://http2.mlstatic.com/D_NQ_NP_2X_977430-MLA104860898285_012026-F.webp', this)" class="btn-add">+ CARRINHO</button>
+            </div>
+
+            <div class="card">
+                <img src="https://m.media-amazon.com/images/I/71Dq8+22SwL._AC_SX679_.jpg" class="product-img">
+                <h3>MOTHERBOARD X670E</h3>
+                <p>Estabilidade extrema para overclocking e PCIe 5.0.</p>
+                <span class="price">R$ 4.250,00</span>
+                <button onclick="comprarAgora('Motherboard X670E', 4250.00)" class="btn">COMPRAR AGORA</button>
+                <button onclick="adicionarAoCarrinho('Motherboard X670E', 4250.00, 'https://m.media-amazon.com/images/I/71Dq8+22SwL._AC_SX679_.jpg', this)" class="btn-add">+ CARRINHO</button>
+            </div>
+
+            <div class="card">
+                <img src="https://m.media-amazon.com/images/I/610sKT7xhPL._AC_SX679_.jpg" class="product-img">
+                <h3>HEADSET HI-RES 7.1</h3>
+                <p>Áudio espacial imersivo e cancelamento de ruído ativo.</p>
+                <span class="price">R$ 1.000,00</span>
+                <button onclick="comprarAgora('Headset Hi-Res 7.1', 1000.00)" class="btn">COMPRAR AGORA</button>
+                <button onclick="adicionarAoCarrinho('Headset Hi-Res 7.1', 1000.00, 'https://m.media-amazon.com/images/I/610sKT7xhPL._AC_SX679_.jpg', this)" class="btn-add">+ CARRINHO</button>
+            </div>
+
+            <div class="card">
+                <img src="https://m.media-amazon.com/images/I/51+dzbnWF9L._AC_SX679_.jpg" class="product-img">
+                <h3>SSD NVME GEN5 2TB</h3>
+                <p>Velocidades insanas de leitura até 12.000 MB/s.</p>
+                <span class="price">R$ 5.500,00</span>
+                <button onclick="comprarAgora('SSD NVME Gen5 2TB', 5500.00)" class="btn">COMPRAR AGORA</button>
+                <button onclick="adicionarAoCarrinho('SSD NVME Gen5 2TB', 5500.00, 'https://m.media-amazon.com/images/I/51+dzbnWF9L._AC_SX679_.jpg', this)" class="btn-add">+ CARRINHO</button>
+            </div>
+
+            <div class="card">
+                <img src="https://m.media-amazon.com/images/I/61XsKRKsGoL._AC_SX679_.jpg" class="product-img">
+                <h3>RAM 32GB DDR5</h3>
+                <p>Frequência de 6000MHz para multitarefa sem gargalos.</p>
+                <span class="price">R$ 5.550,00</span>
+                <button onclick="comprarAgora('RAM 32GB DDR5', 5550.00)" class="btn">COMPRAR AGORA</button>
+                <button onclick="adicionarAoCarrinho('RAM 32GB DDR5', 5550.00, 'https://m.media-amazon.com/images/I/61XsKRKsGoL._AC_SX679_.jpg', this)" class="btn-add">+ CARRINHO</button>
+            </div>
+
+            <div class="card">
+                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_647266-MLB86683348094_062025-F.webp" class="product-img">
+                <h3>PC GAMER RYZEN 5 5600GT</h3>
+                <p>A máquina definitiva montada por nossos especialistas.</p>
+                <span class="price">R$ 6.500,00</span>
+                <button onclick="comprarAgora('PC Gamer Ryzen 5', 6500.00)" class="btn">COMPRAR AGORA</button>
+                <button onclick="adicionarAoCarrinho('PC Gamer Ryzen 5', 6500.00, 'https://http2.mlstatic.com/D_NQ_NP_2X_647266-MLB86683348094_062025-F.webp', this)" class="btn-add">+ CARRINHO</button>
+            </div>
+
+            <div class="card">
+                <img src="https://tse4.mm.bing.net/th/id/OIP.YVrwoGyy78h3c4L4rba-hAHaEK?pid=ImgDet&w=474&h=266&rs=1&o=7&rm=3" class="product-img">
+                <h3>CENTRAL DE JOGOS</h3>
+                <p>Setup completo pronto para streaming e alta performance.</p>
+                <span class="price">A PARTIR DE R$ 300,00</span>
+                <button onclick="comprarAgora('Central de Jogos', 300.00)" class="btn">COMPRAR AGORA</button>
+                <button onclick="adicionarAoCarrinho('Central de Jogos', 300.00, 'https://tse4.mm.bing.net/th/id/OIP.YVrwoGyy78h3c4L4rba-hAHaEK?pid=ImgDet&w=474&h=266&rs=1&o=7&rm=3', this)" class="btn-add">+ CARRINHO</button>
+            </div>
+
         </div>
     </section>
 
+    <!-- MODAL PAGAMENTO -->
     <div id="payment-modal">
         <div class="payment-content">
-            <button onclick="fecharModal()" class="btn" style="width:auto; margin-bottom:20px;">← VOLTAR</button>
+            <button onclick="fecharModal()" class="btn" style="width:auto; padding:8px 16px; margin-bottom:20px;">← VOLTAR</button>
             <div id="email-step">
-                <h3 style="font-size:0.7rem; color:var(--accent); margin-bottom:10px;">INFORME SEU E-MAIL</h3>
-                <input type="email" id="input-email-cliente" style="width:100%; padding:10px; background:#111; border:1px solid var(--accent); color:#fff;" placeholder="seu@email.com">
-                <button onclick="validarEIniciarCheckoutMP()" class="btn" style="margin-top:10px; background:var(--accent); color:#000;">PROSSEGUIR</button>
+                <h3>INFORME SEU E-MAIL</h3>
+                <input type="email" id="input-email-cliente" placeholder="seu@email.com">
+                <button onclick="validarEIniciarCheckoutMP()" class="btn" style="background:var(--accent); color:#000;">PROSSEGUIR</button>
             </div>
             <div id="paymentBrick_container"></div>
         </div>
     </div>
 
+    <!-- SERVIÇOS -->
+    <section id="servicos">
+        <h2 class="section-title">SERVIÇOS TÉCNICOS</h2>
+        <div class="grid">
+            <div class="service-card">
+                <h3>MONTAGEM ELITE</h3>
+                <p>Montagem artesanal, cable management e testes de estresse térmico.</p>
+            </div>
+            <div class="service-card">
+                <h3>OTIMIZAÇÃO DE OS</h3>
+                <p>Remoção de bloatwares e ajuste de BIOS para máxima performance.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section id="contato">
+        <div class="form-container">
+            <h2 style="text-align:center; margin-bottom:20px; font-family:'Syncopate'; font-size:0.7rem; color:var(--accent);">CONSULTORIA TÉCNICA</h2>
+            <input type="text" id="nome" placeholder="SEU NOME">
+            <input type="text" id="endereco" placeholder="SEU ENDEREÇO COMPLETO">
+            <select id="tipo_solicitacao">
+                <option value="" disabled selected>TIPO DE SOLICITAÇÃO</option>
+                <option value="Formatação">FORMATAÇÃO</option>
+                <option value="Peças / Hardware">PEÇAS / HARDWARE</option>
+                <option value="Suporte Técnico">SUPORTE TÉCNICO</option>
+            </select>
+            <input type="text" id="data" placeholder="DATA DESEJADA">
+            <textarea id="descricao" placeholder="DESCREVA O PROBLEMA OU NECESSIDADE"></textarea>
+            <button onclick="enviar()" class="btn" style="width:100%;">ENVIAR REQUISIÇÃO</button>
+        </div>
+    </section>
+
+    <footer>
+        <p>TECHNOCYBBER // EST. 2035 // HIGH-END HARDWARE DIVISION</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+
     <script>
         const mp = new MercadoPago('APP_USR-75a7db7d-cf21-488b-afcc-c46d03085ded');
-        let carrinho = JSON.parse(localStorage.getItem('tech_cart')) || [];
-        let totalGlobal = 0;
-        let nomesGlobal = "";
 
-        const produtos = [
-            { id: 1, nome: 'RTX 3080 OC 10GB', preco: 7000.00, img: 'https://http2.mlstatic.com/D_NQ_NP_2X_716038-MLU78929255715_092024-F.webp' },
-            { id: 2, nome: 'TECLADO MECÂNICO RGB', preco: 850.00, img: 'https://http2.mlstatic.com/D_NQ_NP_2X_977430-MLA104860898285_012026-F.webp' },
-            { id: 3, nome: 'MOTHERBOARD X670E', preco: 4250.00, img: 'https://m.media-amazon.com/images/I/71Dq8+22SwL._AC_SX679_.jpg' },
-            { id: 4, nome: 'HEADSET HI-RES 7.1', preco: 1000.00, img: 'https://m.media-amazon.com/images/I/610sKT7xhPL._AC_SX679_.jpg' },
-            { id: 5, nome: 'SSD NVME GEN5 2TB', preco: 5500.00, img: 'https://m.media-amazon.com/images/I/51+dzbnWF9L._AC_SX679_.jpg' },
-            { id: 6, nome: 'RAM 32GB DDR5', preco: 5550.00, img: 'https://m.media-amazon.com/images/I/61XsKRKsGoL._AC_SX679_.jpg' },
-            { id: 7, nome: 'PC GAMER RYZEN 5', preco: 6500.00, img: 'https://http2.mlstatic.com/D_NQ_NP_2X_647266-MLB86683348094_062025-F.webp' },
-            { id: 8, nome: 'CENTRAL DE JOGOS', preco: 300.00, img: 'https://tse4.mm.bing.net/th/id/OIP.YVrwoGyy78h3c4L4rba-hAHaEK?pid=ImgDet&w=474&h=266&rs=1&o=7&rm=3' }
-        ];
+        let carrinho = [];
+        let v_atual = 0;
+        let p_atual = "";
 
-        function renderProdutos() {
-            const grid = document.getElementById('grid-produtos');
-            grid.innerHTML = produtos.map(p => `
-                <div class="card">
-                    <img src="${p.img}" class="product-img">
-                    <h3>${p.nome}</h3>
-                    <span class="price">R$ ${p.preco.toLocaleString('pt-br', {minimumFractionDigits:2})}</span>
-                    <button onclick="comprarDireto('${p.nome}', ${p.preco})" class="btn">COMPRAR AGORA</button>
-                    <button onclick="addCarrinho('${p.nome}', ${p.preco}, '${p.img}')" class="btn btn-add">+ CARRINHO</button>
-                </div>
-            `).join('');
+        // ========================
+        // CARRINHO
+        // ========================
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('active');
         }
 
-        function toggleCart() { document.getElementById('cart-sidebar').classList.toggle('active'); }
-
-        function addCarrinho(nome, preco, img) {
-            const item = carrinho.find(i => i.nome === nome);
-            if(item) item.qtd++; else carrinho.push({nome, preco, img, qtd: 1});
-            updateCarrinho();
+        function adicionarAoCarrinho(nome, preco, img, btn) {
+            const existente = carrinho.find(i => i.nome === nome);
+            if (existente) { existente.qtd++; }
+            else { carrinho.push({ nome, preco, img, qtd: 1 }); }
+            btn.textContent = '✔ ADICIONADO';
+            btn.classList.add('added');
+            setTimeout(() => { btn.textContent = '+ CARRINHO'; btn.classList.remove('added'); }, 1500);
+            renderCarrinho();
         }
 
-        function updateCarrinho() {
-            localStorage.setItem('tech_cart', JSON.stringify(carrinho));
+        function renderCarrinho() {
             const list = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
-            const countEl = document.getElementById('cart-count');
             const footer = document.getElementById('cart-footer');
+            const countEl = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total');
 
-            if(carrinho.length === 0) {
-                list.innerHTML = '<p style="text-align:center; font-size:0.6rem; color:#555; margin-top:20px;">VAZIO</p>';
+            const totalQtd = carrinho.reduce((s, i) => s + i.qtd, 0);
+            countEl.innerText = totalQtd;
+
+            if (carrinho.length === 0) {
+                list.innerHTML = '<p class="cart-empty">CARRINHO VAZIO</p>';
                 footer.style.display = 'none';
-                countEl.innerText = 0;
                 return;
             }
 
             footer.style.display = 'block';
             let total = 0;
-            let qtdTotal = 0;
             list.innerHTML = carrinho.map((item, idx) => {
                 total += item.preco * item.qtd;
-                qtdTotal += item.qtd;
-                return `<div class="cart-item">
-                    <img src="${item.img}">
-                    <div class="cart-item-info" style="flex:1">
-                        <h4>${item.nome}</h4>
-                        <p style="color:var(--accent); font-size:0.7rem;">${item.qtd}x R$ ${item.preco.toFixed(2)}</p>
-                    </div>
-                    <button onclick="remover(${idx})" style="background:none; border:none; color:red; cursor:pointer;">✕</button>
-                </div>`;
+                return `
+                    <div class="cart-item">
+                        <img src="${item.img}" alt="${item.nome}">
+                        <div class="cart-item-info">
+                            <h4>${item.nome}</h4>
+                            <span class="item-price">R$ ${(item.preco * item.qtd).toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>
+                            <div class="cart-item-qty">
+                                <button class="qty-btn" onclick="alterarQtd(${idx}, -1)">−</button>
+                                <span>${item.qtd}</span>
+                                <button class="qty-btn" onclick="alterarQtd(${idx}, 1)">+</button>
+                                <button class="remove-btn" onclick="removerItem(${idx})">✕ remover</button>
+                            </div>
+                        </div>
+                    </div>`;
             }).join('');
-            
-            countEl.innerText = qtdTotal;
-            totalEl.innerText = `R$ ${total.toLocaleString('pt-br', {minimumFractionDigits:2})}`;
-            totalGlobal = total;
-            nomesGlobal = carrinho.map(c => `${c.qtd}x ${c.nome}`).join(', ');
+            totalEl.textContent = 'R$ ' + total.toLocaleString('pt-BR', {minimumFractionDigits:2});
         }
 
-        function remover(idx) { carrinho.splice(idx, 1); updateCarrinho(); }
-
-        function comprarDireto(nome, preco) {
-            totalGlobal = preco;
-            nomesGlobal = nome;
-            abrirModal();
+        function alterarQtd(idx, delta) {
+            carrinho[idx].qtd += delta;
+            if (carrinho[idx].qtd <= 0) carrinho.splice(idx, 1);
+            renderCarrinho();
         }
 
-        function irParaCheckout() { toggleCart(); abrirModal(); }
+        function removerItem(idx) {
+            carrinho.splice(idx, 1);
+            renderCarrinho();
+        }
 
-        function abrirModal() {
+        function irParaCheckout() {
+            if (carrinho.length === 0) return alert("Carrinho vazio!");
+            v_atual = carrinho.reduce((s, i) => s + i.preco * i.qtd, 0);
+            p_atual = carrinho.map(i => `${i.qtd}x ${i.nome}`).join(', ');
+            toggleCart();
+            abrirPagamentoModal();
+        }
+
+        // ========================
+        // COMPRA INDIVIDUAL
+        // ========================
+        function comprarAgora(nome, preco) {
+            v_atual = preco;
+            p_atual = nome;
+            abrirPagamentoModal();
+        }
+
+        function abrirPagamentoModal() {
             document.getElementById('payment-modal').style.display = 'block';
             document.getElementById('email-step').style.display = 'block';
             document.getElementById('paymentBrick_container').innerHTML = '';
+            document.getElementById('input-email-cliente').value = '';
         }
 
-        function fecharModal() { 
+        function fecharModal() {
             document.getElementById('payment-modal').style.display = 'none';
             if (window.paymentBrickController) window.paymentBrickController.unmount();
         }
 
         async function validarEIniciarCheckoutMP() {
             const email = document.getElementById('input-email-cliente').value;
-            if(!email.includes('@')) return alert("E-mail inválido");
+            const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            if (!valid) { alert("Digite um e-mail válido."); return; }
+
             document.getElementById('email-step').style.display = 'none';
 
             const bricksBuilder = mp.bricks();
+            if (window.paymentBrickController) window.paymentBrickController.unmount();
+
             window.paymentBrickController = await bricksBuilder.create('payment', 'paymentBrick_container', {
-                initialization: { amount: totalGlobal, payer: { email } },
+                initialization: { amount: v_atual, payer: { email, entity_type: 'individual' } },
+                customization: { paymentMethods: { ticket: "all", bankTransfer: "all", creditCard: "all" } },
                 callbacks: {
+                    onReady: () => console.log("MP Pronto"),
+                    onError: (e) => { console.error(e); alert("Erro ao carregar pagamento."); },
                     onSubmit: ({ formData }) => {
-                        return fetch("/api/finalizar", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({ ...formData, produto: nomesGlobal, valor: totalGlobal })
-                        }).then(r => r.json()).then(res => {
-                            if(res.status === 'approved') {
-                                alert("Pagamento aprovado!");
-                                carrinho = []; updateCarrinho(); location.reload();
-                            }
+                        return new Promise((resolve, reject) => {
+                            fetch("/api/finalizar", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ ...formData, produto: p_atual, valor: v_atual })
+                            })
+                            .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+                            .then(res => {
+                                if (res.status === 'approved') {
+                                    alert("✅ Pagamento aprovado! Verifique seu e-mail.");
+                                    carrinho = []; renderCarrinho();
+                                } else if (res.status === 'pending' || res.status === 'in_process') {
+                                    alert("⏳ Pagamento em processamento. Finalize no seu banco.");
+                                } else {
+                                    alert("❌ Pagamento não aprovado. Tente novamente.");
+                                }
+                                resolve();
+                            })
+                            .catch(() => { alert("❌ Erro ao conectar com o servidor."); reject(); });
                         });
                     }
                 }
             });
         }
 
-        renderProdutos();
-        updateCarrinho();
+        // ========================
+        // WHATSAPP CONTATO
+        // ========================
+        flatpickr("#data", { enableTime: true, dateFormat: "d/m/Y H:i", minDate: "today", locale: "pt" });
+
+        function enviar() {
+            const nome = document.getElementById('nome').value;
+            const endereco = document.getElementById('endereco').value;
+            const tipo = document.getElementById('tipo_solicitacao').value;
+            const data = document.getElementById('data').value;
+            const descricao = document.getElementById('descricao').value;
+            if (!nome || !endereco || !tipo || !data || !descricao) { alert("Preencha todos os campos."); return; }
+            const msg = `*SOLICITAÇÃO TECHNOCYBBER*%0A*Cliente:* ${nome}%0A*Endereço:* ${endereco}%0A*Tipo:* ${tipo}%0A*Data:* ${data}%0A*Descrição:* ${descricao}`;
+            window.open(`https://wa.me/5511986756309?text=${msg}`, '_blank');
+        }
     </script>
 </body>
 </html>
