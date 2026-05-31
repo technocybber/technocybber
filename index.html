@@ -27,49 +27,77 @@
             color: #fff; overflow-x: hidden;
         }
 
-        /* --- CABEÇALHO ATUALIZADO --- */
+        /* --- CABEÇALHO CORRIGIDO PARA NÃO CORTAR --- */
         header {
-            position: fixed; top: 0; width: 100%; height: 80px; padding: 0 4%;
-            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
-            display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            position: fixed; top: 0; width: 100%; 
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.98); backdrop-filter: blur(15px);
+            display: flex; flex-direction: column; /* No celular empilha */
+            align-items: center; 
             z-index: 1000; border-bottom: 1px solid var(--border);
+            height: auto; /* Altura automática para caber as duas linhas */
         }
 
         .header-top {
-            width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;
+            width: 100%; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 8px;
         }
 
-        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 10px; }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 8px; }
         .logo-img { width: 30px; height: 30px; border-radius: 50%; filter: drop-shadow(0 0 5px var(--accent)); }
-        .logo-text { font-family: 'Syncopate', sans-serif; color: #fff; font-size: 0.85rem; font-weight: 700; letter-spacing: 1px; }
+        .logo-text { font-family: 'Syncopate', sans-serif; color: #fff; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; }
 
-        nav { display: flex; align-items: center; gap: 8px; }
-        nav a { 
-            color: #fff; text-decoration: none; font-size: 0.65rem; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
+        nav { 
+            display: flex; 
+            align-items: center; 
+            gap: 6px; 
+            flex-wrap: nowrap; /* Garante que fiquem na mesma linha */
+            width: 100%;
+            justify-content: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 8px;
         }
-        nav a:hover { color: var(--accent); }
+        
+        nav a { 
+            color: #fff; text-decoration: none; font-size: 0.6rem; font-weight: 700; 
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
 
-        /* Separadores Pipe "|" */
-        nav span.pipe { color: var(--border); font-size: 0.7rem; font-weight: 300; }
+        nav span.pipe { color: var(--border); font-size: 0.6rem; opacity: 0.5; }
 
         .cart-icon-btn {
-            background: none; border: none; color: var(--accent); cursor: pointer; position: relative; font-size: 1.1rem;
+            background: rgba(0,242,255,0.1); border: 1px solid var(--border); color: var(--accent); 
+            cursor: pointer; position: relative; font-size: 1rem; width: 38px; height: 38px;
+            display: flex; align-items: center; justify-content: center; border-radius: 5px;
         }
         #cart-count {
-            position: absolute; top: -8px; right: -8px; background: #ff0055; color: #fff;
-            font-size: 0.6rem; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            position: absolute; top: -5px; right: -5px; background: #ff0055; color: #fff;
+            font-size: 0.55rem; width: 16px; height: 16px; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
 
-        /* --- RESPONSIVIDADE DO MENU --- */
+        /* --- AJUSTE PARA COMPUTADOR --- */
         @media (min-width: 768px) {
-            header { flex-direction: row; height: 70px; justify-content: space-between; }
+            header { flex-direction: row; height: 75px; justify-content: space-between; padding: 0 5%; }
             .header-top { width: auto; margin-bottom: 0; }
-            .logo-text { font-size: 1rem; }
-            nav { gap: 15px; }
+            nav { width: auto; border-top: none; padding-top: 0; gap: 15px; }
             nav a { font-size: 0.75rem; }
+            .logo-text { font-size: 1rem; }
             .cart-icon-btn { margin-left: 20px; }
         }
+
+        /* --- OUTRAS SEÇÕES (AJUSTE DE MARGEM) --- */
+        section { padding: 130px 20px 60px; display: flex; flex-direction: column; align-items: center; }
+        .section-title { font-family: 'Syncopate', sans-serif; font-size: 1.2rem; margin-bottom: 40px; color: var(--accent); text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
+        .card { background: var(--card-glass); padding: 20px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
+        .product-img { width: 100%; height: 180px; object-fit: contain; background: #fff; border-radius: 5px; margin-bottom: 15px; padding: 10px; }
+        .price { font-size: 1.3rem; font-weight: 700; color: var(--accent); margin: 10px 0; display: block; }
+        .btn { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--accent); color: var(--accent); font-weight: 700; cursor: pointer; font-size: 0.7rem; }
+        .btn:hover { background: var(--accent); color: #000; }
 
         /* --- SIDEBAR CARRINHO --- */
         #cart-sidebar {
@@ -81,16 +109,6 @@
         .cart-items-list { flex-grow: 1; overflow-y: auto; margin-top: 20px; }
         .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px; font-size: 0.8rem; }
         .remove-btn { color: #ff4444; background: none; border: none; cursor: pointer; }
-
-        /* --- GRID E CARDS --- */
-        section { padding: 120px 20px 60px; display: flex; flex-direction: column; align-items: center; }
-        .section-title { font-family: 'Syncopate', sans-serif; font-size: 1.2rem; margin-bottom: 40px; color: var(--accent); text-align: center; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
-        .card { background: var(--card-glass); padding: 20px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
-        .product-img { width: 100%; height: 180px; object-fit: contain; background: #fff; border-radius: 5px; margin-bottom: 15px; padding: 10px; }
-        .price { font-size: 1.3rem; font-weight: 700; color: var(--accent); margin: 10px 0; display: block; }
-        .btn { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--accent); color: var(--accent); font-weight: 700; cursor: pointer; font-size: 0.7rem; }
-        .btn:hover { background: var(--accent); color: #000; }
 
         /* --- MODAL --- */
         #payment-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; padding: 20px; overflow-y: auto; }
@@ -124,7 +142,6 @@
         </nav>
     </header>
 
-    <!-- SIDEBAR CARRINHO -->
     <div id="cart-sidebar">
         <h2 class="section-title" style="font-size: 1rem;">CARRINHO</h2>
         <button onclick="toggleCart()" class="btn" style="border-color: #444; margin-bottom: 20px;">FECHAR</button>
@@ -274,7 +291,6 @@
                 }
             });
         }
-
         atualizarCarrinhoUI();
     </script>
 </body>
