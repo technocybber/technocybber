@@ -27,70 +27,56 @@
             color: #fff; overflow-x: hidden;
         }
 
-        /* --- CABEÇALHO CORRIGIDO PARA NÃO CORTAR --- */
+        /* --- CABEÇALHO ULTRA COMPACTO --- */
         header {
-            position: fixed; top: 0; width: 100%; 
-            padding: 10px 15px;
-            background: rgba(0, 0, 0, 0.98); backdrop-filter: blur(15px);
-            display: flex; flex-direction: column; /* No celular empilha */
-            align-items: center; 
+            position: fixed; top: 0; width: 100%; height: 60px;
+            padding: 0 8px; /* Reduzi o padding lateral */
+            background: rgba(0, 0, 0, 0.95); backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center; 
             z-index: 1000; border-bottom: 1px solid var(--border);
-            height: auto; /* Altura automática para caber as duas linhas */
         }
 
-        .header-top {
-            width: 100%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 8px;
-        }
-
-        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 8px; }
-        .logo-img { width: 30px; height: 30px; border-radius: 50%; filter: drop-shadow(0 0 5px var(--accent)); }
-        .logo-text { font-family: 'Syncopate', sans-serif; color: #fff; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; }
-
-        nav { 
-            display: flex; 
-            align-items: center; 
-            gap: 6px; 
-            flex-wrap: nowrap; /* Garante que fiquem na mesma linha */
-            width: 100%;
-            justify-content: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 8px;
-        }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 5px; }
+        .logo-img { width: 25px; height: 25px; border-radius: 50%; filter: drop-shadow(0 0 5px var(--accent)); }
         
-        nav a { 
-            color: #fff; text-decoration: none; font-size: 0.6rem; font-weight: 700; 
-            text-transform: uppercase; letter-spacing: 0.5px;
+        /* Fonte do Nome da Loja - Muito pequena no mobile */
+        .logo-text { 
+            font-family: 'Syncopate', sans-serif; color: #fff; 
+            font-size: 0.6rem; font-weight: 700; letter-spacing: 0.5px; 
         }
 
-        nav span.pipe { color: var(--border); font-size: 0.6rem; opacity: 0.5; }
+        /* Nav em linha única com fonte minúscula */
+        nav { display: flex; align-items: center; gap: 4px; }
+        nav a { 
+            color: #fff; text-decoration: none; 
+            font-size: 0.5rem; font-weight: 700; 
+            text-transform: uppercase; white-space: nowrap;
+        }
+        nav span.pipe { color: var(--border); font-size: 0.5rem; opacity: 0.5; }
 
         .cart-icon-btn {
-            background: rgba(0,242,255,0.1); border: 1px solid var(--border); color: var(--accent); 
-            cursor: pointer; position: relative; font-size: 1rem; width: 38px; height: 38px;
-            display: flex; align-items: center; justify-content: center; border-radius: 5px;
+            background: none; border: none; color: var(--accent); cursor: pointer; 
+            position: relative; font-size: 0.9rem; margin-left: 5px;
         }
         #cart-count {
-            position: absolute; top: -5px; right: -5px; background: #ff0055; color: #fff;
-            font-size: 0.55rem; width: 16px; height: 16px; border-radius: 50%; 
+            position: absolute; top: -6px; right: -8px; background: #ff0055; color: #fff;
+            font-size: 0.5rem; width: 14px; height: 14px; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
 
-        /* --- AJUSTE PARA COMPUTADOR --- */
+        /* Ajustes para telas maiores (Tablet/PC) */
         @media (min-width: 768px) {
-            header { flex-direction: row; height: 75px; justify-content: space-between; padding: 0 5%; }
-            .header-top { width: auto; margin-bottom: 0; }
-            nav { width: auto; border-top: none; padding-top: 0; gap: 15px; }
+            header { padding: 0 5%; height: 75px; }
+            .logo-text { font-size: 1rem; letter-spacing: 1px; }
+            .logo-img { width: 35px; height: 35px; }
+            nav { gap: 15px; }
             nav a { font-size: 0.75rem; }
-            .logo-text { font-size: 1rem; }
-            .cart-icon-btn { margin-left: 20px; }
+            nav span.pipe { font-size: 0.8rem; }
+            .cart-icon-btn { font-size: 1.2rem; }
         }
 
-        /* --- OUTRAS SEÇÕES (AJUSTE DE MARGEM) --- */
-        section { padding: 130px 20px 60px; display: flex; flex-direction: column; align-items: center; }
+        /* --- RESTO DO SITE --- */
+        section { padding: 100px 20px 40px; display: flex; flex-direction: column; align-items: center; }
         .section-title { font-family: 'Syncopate', sans-serif; font-size: 1.2rem; margin-bottom: 40px; color: var(--accent); text-align: center; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
         .card { background: var(--card-glass); padding: 20px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
@@ -99,7 +85,6 @@
         .btn { width: 100%; padding: 12px; background: transparent; border: 1px solid var(--accent); color: var(--accent); font-weight: 700; cursor: pointer; font-size: 0.7rem; }
         .btn:hover { background: var(--accent); color: #000; }
 
-        /* --- SIDEBAR CARRINHO --- */
         #cart-sidebar {
             position: fixed; right: -100%; top: 0; width: 100%; max-width: 350px; height: 100%;
             background: #050505; border-left: 1px solid var(--accent); z-index: 2001;
@@ -110,7 +95,6 @@
         .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px; font-size: 0.8rem; }
         .remove-btn { color: #ff4444; background: none; border: none; cursor: pointer; }
 
-        /* --- MODAL --- */
         #payment-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 9999; padding: 20px; overflow-y: auto; }
         .payment-content { max-width: 450px; margin: 0 auto; background: #050505; border: 1px solid var(--accent); padding: 20px; border-radius: 10px; }
         input { width: 100%; padding: 12px; margin-bottom: 10px; background: #000; border: 1px solid #333; color: #fff; }
@@ -119,17 +103,10 @@
 <body>
 
     <header>
-        <div class="header-top">
-            <a href="#home" class="logo-container">
-                <img src="https://i.gifer.com/origin/c9/c97052cf6ec794a3c11e7ecc88f7fe52_w200.gif" alt="Logo" class="logo-img">
-                <div class="logo-text">TECHNOCYBBER</div>
-            </a>
-            
-            <button class="cart-icon-btn" onclick="toggleCart()">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count">0</span>
-            </button>
-        </div>
+        <a href="#home" class="logo-container">
+            <img src="https://i.gifer.com/origin/c9/c97052cf6ec794a3c11e7ecc88f7fe52_w200.gif" alt="Logo" class="logo-img">
+            <div class="logo-text">TECHNOCYBBER</div>
+        </a>
 
         <nav>
             <a href="#home">HOME</a>
@@ -140,6 +117,11 @@
             <span class="pipe">|</span>
             <a href="#contato">CONTATO</a>
         </nav>
+            
+        <button class="cart-icon-btn" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count">0</span>
+        </button>
     </header>
 
     <div id="cart-sidebar">
@@ -152,7 +134,7 @@
         </div>
     </div>
 
-    <!-- LOJA -->
+    <!-- LOJA (8 PRODUTOS) -->
     <section id="loja">
         <h2 class="section-title">HARDWARE ELITE</h2>
         <div class="grid">
@@ -267,7 +249,6 @@
             const email = document.getElementById('input-email-cliente').value;
             if (!email.includes("@")) return alert("E-mail inválido");
             document.getElementById('email-step').style.display = 'none';
-            
             const totalCompra = carrinho.reduce((acc, i) => acc + i.preco, 0);
             const resumo = carrinho.map(i => i.nome).join(', ');
 
