@@ -2,255 +2,654 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technocybber | Elite Hardware Store</title>
+    <meta name="description" content="Technocybber - Hardware de alta performance, PCs Gamer, periféricos e consultoria técnica especializada.">
     
-    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <!-- Favicon SVG inline (evita erro 404 de favicon.ico) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%2302060d'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%2300f2ff' font-family='sans-serif' font-weight='bold' font-size='28'%3ETC%3C/text%3E%3C/svg%3E">
+
+    <!-- Open Graph / Compartilhamento -->
+    <meta property="og:title" content="Technocybber | Elite Hardware Store">
+    <meta property="og:description" content="Soluções em TI, hardware high-performance, montagem elite e otimização de sistemas.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.meupositivo.com.br/doseujeito/wp-content/uploads/2025/06/chip-ia-hardware.webp">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         :root { 
+            color-scheme: dark;
             --accent: #00f2ff; 
-            --border: rgba(0, 242, 255, 0.2);
+            --accent-dim: rgba(0, 242, 255, 0.12);
+            --border: rgba(0, 242, 255, 0.22);
             --card-glass: rgba(10, 10, 20, 0.90);
+            --danger: #ff3b5c;
+            --success: #00e676;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        html {
+            background-color: #02060d;
+            overflow-x: hidden;
+            overflow-x: clip;
+        }
         
         body { 
             font-family: 'Inter', sans-serif; 
-            background: linear-gradient(rgba(0,8,15,0.8), rgba(0,8,15,0.8)), 
-                        url('https://www.meupositivo.com.br/doseujeito/wp-content/uploads/2025/06/chip-ia-hardware.webp');
-            background-size: cover; background-position: center; background-attachment: fixed;
-            color: #fff; overflow-x: hidden;
+            background: transparent;
+            color: #fff; 
+            overflow-x: hidden;
+            overflow-x: clip;
+            min-height: 100vh;
+            min-height: 100dvh;
+            position: relative;
+        }
+
+        /* CAMADA DE BACKGROUND FIXA (COMPATÍVEL COM CELULARES, TABLETS E DESKTOP) */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100vh;
+            height: 100lvh;
+            z-index: 0;
+            pointer-events: none;
+            background-color: #02060d;
+            overflow: hidden;
+            transform: translateZ(0);
+        }
+        .bg-layer::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0, 8, 15, 0.72), rgba(0, 8, 15, 0.82));
+        }
+        .bg-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        /* Garante que seções e footer fiquem acima da camada de fundo */
+        section, footer {
+            position: relative;
+            z-index: 1;
         }
 
         /* CABEÇALHO */
         header {
-            position: fixed; top: 0; width: 100%;
-            padding: 8px 50px 8px 15px;
-            background: #000;
+            position: fixed; top: 0; left: 0; width: 100%;
+            padding: 8px 54px 8px 12px;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             border-bottom: 1px solid var(--border);
-            min-height: 70px;
+            min-height: 68px;
         }
 
         .header-center {
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* alinha pelo lado esquerdo do bloco */
-            gap: 3px;
+            align-items: center;
+            gap: 5px;
+            max-width: 100%;
         }
 
-        /* Linha 1: Logo + Nome */
         .header-left {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .logo-img { 
-            width: 52px; height: 52px; border-radius: 50%; 
+            width: 44px; height: 44px; border-radius: 50%; 
             filter: drop-shadow(0 0 8px var(--accent)); object-fit: cover; flex-shrink: 0;
         }
 
         .logo-text { 
             font-family: 'Syncopate', sans-serif; color: #fff; 
-            font-size: 1rem; font-weight: 700; letter-spacing: 2px; white-space: nowrap;
+            font-size: 0.92rem; font-weight: 700; letter-spacing: 2px; white-space: nowrap;
         }
 
-        /* Linha 2: Nav alinhada com o nome (recuada pelo tamanho do logo + gap) */
         nav { 
-            display: flex; gap: 14px; flex-wrap: wrap;
-            padding-left: 64px; /* 52px logo + 12px gap */
+            display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+            padding-left: 0;
         }
         nav a { 
-            color: #aaa; text-decoration: none; font-size: 0.62rem; 
+            color: #bbb; text-decoration: none; font-size: 0.68rem; 
             font-weight: 700; text-transform: uppercase; transition: 0.2s; letter-spacing: 1px;
         }
-        nav a:hover { color: var(--accent); }
+        nav a:hover, nav a:focus-visible { color: var(--accent); outline: none; }
 
-        /* Carrinho fixo à direita */
         .cart-icon-btn {
             background: none; border: none; color: var(--accent); 
-            cursor: pointer; position: absolute; right: 15px; top: 50%;
+            cursor: pointer; position: absolute; right: 12px; top: 50%;
             transform: translateY(-50%);
-            font-size: 1.3rem; padding: 5px;
+            font-size: 1.35rem; padding: 8px;
+            transition: transform 0.2s;
         }
+        .cart-icon-btn:hover { transform: translateY(-50%) scale(1.08); }
         #cart-count {
-            position: absolute; top: -6px; right: -6px; background: #ff0055; color: #fff;
-            font-size: 0.55rem; width: 16px; height: 16px; border-radius: 50%; 
+            position: absolute; top: 0; right: 0; background: #ff0055; color: #fff;
+            font-size: 0.6rem; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; font-weight: bold;
+        }
+
+        @media (max-width: 380px) {
+            header { padding: 8px 48px 8px 10px; }
+            .logo-img { width: 36px; height: 36px; }
+            .logo-text { font-size: 0.8rem; letter-spacing: 1.4px; }
+            nav { gap: 9px; }
+            nav a { font-size: 0.62rem; letter-spacing: 0.6px; }
         }
 
         @media (min-width: 768px) {
             header { padding: 0 70px 0 30px; min-height: 80px; }
+            .header-center { align-items: flex-start; gap: 3px; }
             .logo-img { width: 56px; height: 56px; }
             .logo-text { font-size: 1.2rem; }
-            nav { gap: 22px; padding-left: 68px; }
+            nav { gap: 22px; padding-left: 66px; justify-content: flex-start; }
             nav a { font-size: 0.75rem; }
             .cart-icon-btn { font-size: 1.5rem; right: 30px; }
         }
 
         /* HERO */
         #home {
-            height: 100vh; display: flex; flex-direction: column;
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
-            padding: 80px 20px 0;
+            padding: 96px 16px 40px;
         }
         #home h1 { 
             font-family: 'Syncopate', sans-serif; 
-            font-size: clamp(1.6rem, 7vw, 3.5rem); 
-            letter-spacing: clamp(6px, 2vw, 18px); margin-bottom: 20px;
+            font-size: clamp(1.15rem, 5.2vw, 3.4rem); 
+            letter-spacing: clamp(2px, 1.4vw, 16px); 
+            margin-bottom: 20px;
+            max-width: 100%;
+            line-height: 1.2;
         }
         .hero-subtitle { 
-            font-size: clamp(0.6rem, 2vw, 0.8rem); color: var(--accent); 
-            letter-spacing: 3px; padding: 10px 20px; border: 1px solid var(--accent); 
-            text-transform: uppercase; background: rgba(0,0,0,0.4); 
+            font-size: clamp(0.62rem, 2vw, 0.85rem); color: var(--accent); 
+            letter-spacing: clamp(1.5px, 0.8vw, 3px); padding: 10px 16px; border: 1px solid var(--accent); 
+            text-transform: uppercase; background: rgba(0,0,0,0.6);
+            max-width: 100%;
+            line-height: 1.4;
         }
+        .hero-cta {
+            margin-top: 28px; padding: 12px 28px; border: 1px solid var(--accent);
+            background: var(--accent); color: #000; font-weight: 700; text-decoration: none;
+            font-size: 0.75rem; letter-spacing: 2px; transition: 0.3s;
+        }
+        .hero-cta:hover { background: transparent; color: var(--accent); }
 
         /* SEÇÕES */
-        section { padding: 100px 20px 60px; display: flex; flex-direction: column; align-items: center; }
+        section { 
+            padding: 85px 20px 60px; 
+            display: flex; flex-direction: column; align-items: center;
+            scroll-margin-top: 82px;
+        }
         .section-title { 
             font-family: 'Syncopate', sans-serif; font-size: clamp(1rem, 3vw, 1.4rem); 
-            margin-bottom: 35px; color: var(--accent); text-align: center; letter-spacing: 4px;
+            margin-bottom: 25px; color: var(--accent); text-align: center;
+            letter-spacing: clamp(2px, 0.8vw, 4px);
         }
 
-        /* GRID */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
-        
-        @media (max-width: 600px) {
-            .grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+        /* FILTROS E BUSCA */
+        .store-controls {
+            width: 100%; max-width: 1200px;
+            display: flex; flex-direction: column; gap: 14px;
+            align-items: center; margin-bottom: 28px;
         }
-        @media (max-width: 380px) {
-            .grid { grid-template-columns: 1fr; }
+        .search-wrapper {
+            position: relative; width: 100%; max-width: 420px;
+        }
+        .search-wrapper i {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+            color: var(--accent); font-size: 0.85rem; pointer-events: none;
+        }
+        #search-input {
+            width: 100%; padding: 11px 14px 11px 38px;
+            background: rgba(5, 10, 18, 0.9); border: 1px solid var(--border);
+            border-radius: 6px; color: #fff; font-size: 0.85rem; outline: none;
+        }
+        #search-input:focus { border-color: var(--accent); }
+
+        .filter-buttons {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+        }
+        .filter-btn {
+            background: rgba(5, 10, 18, 0.85); border: 1px solid var(--border);
+            color: #bbb; padding: 8px 14px; border-radius: 4px; cursor: pointer;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; transition: 0.25s;
+            text-transform: uppercase;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--accent); color: #000; border-color: var(--accent);
+        }
+
+        /* GRID RESPONSIVO (DESKTOP, TABLET E CELULAR) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+        @media (max-width: 1024px) {
+            .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+        }
+        @media (min-width: 900px) and (max-width: 1059px) {
+            #loja .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+        @media (max-width: 640px) {
+            section { padding: 75px 14px 48px; }
+            .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+            .product-img-wrap { height: 145px; }
+        }
+        @media (max-width: 480px) {
+            .grid { grid-template-columns: 1fr; gap: 16px; }
+            .product-img-wrap { height: 170px; }
+        }
+
+        .empty-results {
+            grid-column: 1 / -1; text-align: center; padding: 40px 20px;
+            color: #aaa; font-size: 0.85rem; letter-spacing: 1px;
+            background: var(--card-glass); border: 1px solid var(--border); border-radius: 8px;
         }
 
         /* CARD */
         .card { 
-            background: var(--card-glass); padding: 15px; border-radius: 8px; 
+            background: var(--card-glass); padding: 16px; border-radius: 8px; 
             border: 1px solid var(--border); text-align: center;
             display: flex; flex-direction: column; transition: 0.3s;
+            min-width: 0;
         }
-        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
-        .product-img { 
-            width: 100%; height: 160px; object-fit: contain; 
-            background: #fff; border-radius: 5px; margin-bottom: 12px; padding: 8px;
-        }
-        .card h3 { font-size: 0.75rem; letter-spacing: 0.5px; margin-bottom: 6px; line-height: 1.3; }
-        .card p { font-size: 0.65rem; color: #999; flex-grow: 1; margin-bottom: 8px; }
-        .price { font-size: 1.1rem; font-weight: 700; color: var(--accent); margin: 8px 0; display: block; }
+        .card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 242, 255, 0.1); }
         
+        .product-img-wrap {
+            width: 100%; height: 170px; background: #f8fafc; border-radius: 6px;
+            margin-bottom: 14px; padding: 10px; display: flex; align-items: center; justify-content: center;
+            overflow: hidden; border: 1px solid rgba(255,255,255,0.12);
+        }
+        .product-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .card h3 { font-size: 0.82rem; letter-spacing: 0.5px; margin-bottom: 6px; line-height: 1.35; word-break: break-word; }
+        .card p { font-size: 0.75rem; color: #b0b8c4; flex-grow: 1; margin-bottom: 10px; line-height: 1.4; }
+        .price { font-size: 1.15rem; font-weight: 700; color: var(--accent); margin: 8px 0; display: block; }
+        
+        .card-option-select {
+            width: 100%; max-width: 100%; padding: 8px 10px; margin-bottom: 8px;
+            background: #0a111a; border: 1px solid var(--border); color: #fff;
+            border-radius: 4px; font-size: 0.75rem; outline: none; cursor: pointer;
+            text-overflow: ellipsis;
+        }
+        .card-option-select:focus { border-color: var(--accent); }
+
         .btn { 
             width: 100%; padding: 11px; background: transparent; 
             border: 1px solid var(--accent); color: var(--accent); 
-            font-weight: 700; cursor: pointer; font-size: 0.65rem; 
-            letter-spacing: 1px; transition: 0.3s; margin-top: 6px;
+            font-weight: 700; cursor: pointer; font-size: 0.72rem; 
+            letter-spacing: 1px; transition: 0.25s; margin-top: 6px; border-radius: 4px;
         }
         .btn:hover { background: var(--accent); color: #000; }
         .btn-add { 
             width: 100%; padding: 11px; background: transparent; 
-            border: 1px solid rgba(0, 242, 255, 0.4); color: #aaa; 
-            font-weight: 700; cursor: pointer; font-size: 0.65rem; 
-            letter-spacing: 1px; transition: 0.3s; margin-top: 4px;
+            border: 1px solid rgba(0, 242, 255, 0.35); color: #ccc; 
+            font-weight: 700; cursor: pointer; font-size: 0.72rem; 
+            letter-spacing: 1px; transition: 0.25s; margin-top: 6px; border-radius: 4px;
         }
-        .btn-add:hover, .btn-add.added { background: rgba(0,242,255,0.1); color: var(--accent); border-color: var(--accent); }
+        .btn-add:hover, .btn-add.added { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
 
-        /* SIDEBAR CARRINHO */
+        /* CARRINHO */
+        #cart-backdrop {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(3px);
+            z-index: 2000;
+        }
+        #cart-backdrop.active { display: block; }
+
         #cart-sidebar {
-            position: fixed; right: -100%; top: 0; width: 100%; max-width: 360px; height: 100%;
-            background: #050505; border-left: 1px solid var(--accent); z-index: 2001;
-            transition: 0.35s ease; padding: 20px; display: flex; flex-direction: column;
+            position: fixed; right: -100%; top: 0; width: 100%; max-width: 380px;
+            height: 100%; height: 100dvh;
+            background: #05070c; border-left: 1px solid var(--accent); z-index: 2001;
+            transition: right 0.35s ease;
+            padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+            display: flex; flex-direction: column;
             overflow: hidden;
         }
         #cart-sidebar.active { right: 0; }
-        .cart-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .cart-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; gap: 10px; }
         .cart-header-row h2 { font-family: 'Syncopate', sans-serif; font-size: 0.9rem; color: var(--accent); letter-spacing: 3px; }
-        .close-cart-btn { background: none; border: 1px solid #333; color: #fff; padding: 6px 12px; cursor: pointer; font-size: 0.7rem; }
+        .close-cart-btn { background: none; border: 1px solid #333; color: #fff; padding: 6px 12px; cursor: pointer; font-size: 0.7rem; border-radius: 4px; flex-shrink: 0; }
         .close-cart-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-        .cart-items-list { flex-grow: 1; overflow-y: auto; }
-        .cart-item { 
-            display: flex; gap: 10px; align-items: center;
-            padding: 12px 0; border-bottom: 1px solid #1a1a2e; 
-        }
+        .cart-items-list { flex-grow: 1; overflow-y: auto; padding-right: 4px; }
+        .cart-item { display: flex; gap: 10px; align-items: center; padding: 12px 0; border-bottom: 1px solid #1a1a2e; }
         .cart-item img { width: 55px; height: 55px; object-fit: contain; background: #fff; border-radius: 5px; padding: 4px; flex-shrink: 0; }
-        .cart-item-info { flex: 1; }
-        .cart-item-info h4 { font-size: 0.7rem; margin-bottom: 3px; }
+        .cart-item-info { flex: 1; min-width: 0; }
+        .cart-item-info h4 { font-size: 0.75rem; margin-bottom: 3px; word-break: break-word; }
         .cart-item-info .item-price { font-size: 0.85rem; color: var(--accent); font-weight: 700; }
-        .cart-item-qty { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
-        .qty-btn { background: transparent; border: 1px solid #333; color: #fff; width: 24px; height: 24px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
+        .cart-item-qty { display: flex; align-items: center; gap: 8px; margin-top: 6px; flex-wrap: wrap; }
+        .qty-btn { background: transparent; border: 1px solid #444; color: #fff; width: 26px; height: 26px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; border-radius: 3px; }
         .qty-btn:hover { border-color: var(--accent); color: var(--accent); }
-        .remove-btn { color: #ff4444; background: none; border: none; cursor: pointer; font-size: 0.65rem; margin-left: 4px; }
+        .remove-btn { color: #ff5c77; background: none; border: none; cursor: pointer; font-size: 0.7rem; margin-left: 4px; }
+        .remove-btn:hover { text-decoration: underline; }
 
-        .cart-empty { text-align: center; color: #444; font-size: 0.75rem; padding: 40px 0; letter-spacing: 2px; }
+        .cart-empty { text-align: center; color: #666; font-size: 0.8rem; padding: 50px 0; letter-spacing: 2px; }
 
         .cart-footer { border-top: 1px solid var(--accent); padding-top: 15px; margin-top: 10px; }
-        .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .cart-total-label { font-size: 0.7rem; color: #aaa; letter-spacing: 2px; }
+        .cart-total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .cart-total-label { font-size: 0.75rem; color: #aaa; letter-spacing: 2px; }
         .cart-total-value { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+        .clear-cart-btn {
+            width: 100%; background: none; border: none; color: #888; font-size: 0.7rem;
+            cursor: pointer; margin-top: 8px; padding: 6px; letter-spacing: 1px;
+        }
+        .clear-cart-btn:hover { color: var(--danger); }
 
-        /* MODAL PAGAMENTO */
+        @media (max-width: 400px) {
+            #cart-sidebar { max-width: 100%; padding: 16px 16px calc(16px + env(safe-area-inset-bottom, 0px)); }
+        }
+
+        /* MODAL CHECKOUT / PAGAMENTO */
         #payment-modal { 
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.96); z-index: 9999; padding: 20px; overflow-y: auto; 
+            background: rgba(0,0,0,0.92); backdrop-filter: blur(5px);
+            z-index: 9000; padding: 20px; overflow-y: auto; 
         }
-        .payment-content { max-width: 450px; margin: 0 auto; background: #050505; border: 1px solid var(--accent); padding: 20px; border-radius: 10px; }
-        #email-step { text-align: center; margin-bottom: 20px; }
-        #email-step h3 { color: var(--accent); margin-bottom: 12px; font-family: 'Syncopate', sans-serif; font-size: 0.75rem; letter-spacing: 2px; }
-        #email-step input { width: 100%; padding: 13px; margin-bottom: 10px; background: #111; border: 1px solid var(--accent); color: #fff; outline: none; font-family: 'Inter', sans-serif; }
+        .payment-content { max-width: 480px; width: 100%; margin: 20px auto; background: #070a10; border: 1px solid var(--accent); padding: 22px; border-radius: 10px; }
+        .checkout-summary {
+            background: rgba(0, 242, 255, 0.06); border: 1px solid var(--border);
+            border-radius: 6px; padding: 12px; margin-bottom: 18px; font-size: 0.78rem;
+        }
+        .checkout-summary-title { color: #aaa; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+        .checkout-summary-items { color: #fff; margin-bottom: 6px; line-height: 1.4; word-break: break-word; }
+        .checkout-summary-total { color: var(--accent); font-weight: 700; font-size: 1rem; }
+
+        #customer-step { margin-bottom: 6px; }
+        #customer-step h3,
+        #payment-step h3 { 
+            color: var(--accent); margin-bottom: 14px; text-align: center;
+            font-family: 'Syncopate', sans-serif; font-size: 0.75rem; letter-spacing: 2px; 
+        }
+        #customer-step input,
+        #customer-step select {
+            width: 100%; padding: 12px; margin-bottom: 10px;
+            background: #0c111b; border: 1px solid var(--border);
+            color: #fff; outline: none; font-family: 'Inter', sans-serif;
+            border-radius: 4px; font-size: 0.85rem; transition: border-color 0.2s;
+        }
+        #customer-step input:focus,
+        #customer-step select:focus { border-color: var(--accent); }
+        #customer-step select option { background: #0c111b; color: #fff; }
+        .checkout-retirada-info {
+            display: none; background: rgba(0, 242, 255, 0.06);
+            border: 1px dashed var(--border); border-radius: 4px;
+            padding: 10px 12px; font-size: 0.75rem; color: #cbd5e1;
+            margin-bottom: 10px; line-height: 1.45;
+        }
+
+        /* ETAPA DE PAGAMENTO ESTÁTICO */
+        #payment-step { display: none; text-align: center; }
+        .order-badge {
+            display: inline-block; background: var(--accent-dim); border: 1px solid var(--border);
+            color: var(--accent); font-size: 0.74rem; font-weight: 700;
+            padding: 5px 12px; border-radius: 20px; margin-bottom: 12px; letter-spacing: 1px;
+        }
+        .pay-tabs {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px;
+        }
+        .pay-tab-btn {
+            padding: 11px 8px; background: #0c111b; border: 1px solid var(--border);
+            color: #cbd5e1; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.8px;
+            border-radius: 5px; cursor: pointer; transition: 0.25s;
+        }
+        .pay-tab-btn.active, .pay-tab-btn:hover {
+            background: var(--accent); color: #000; border-color: var(--accent);
+        }
+
+        .pix-box { background: #0d131d; border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+        .pix-qr-box {
+            width: 210px; max-width: 100%; min-height: 210px; background: #fff; padding: 10px;
+            border-radius: 8px; margin: 0 auto 12px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .pix-qr-box img { max-width: 100%; height: auto; }
+        .pix-key-info { font-size: 0.75rem; color: #cbd5e1; margin-bottom: 10px; line-height: 1.4; word-break: break-word; }
+        .pix-key-info strong { color: var(--accent); }
+        .pix-code-input {
+            width: 100%; padding: 10px; background: #05080d; border: 1px solid #333;
+            color: var(--accent); font-size: 0.7rem; border-radius: 4px; margin-bottom: 8px; text-align: center;
+        }
+        .card-info-box {
+            background: #0d131d; border: 1px solid var(--border); border-radius: 8px;
+            padding: 18px 14px; margin-bottom: 12px; font-size: 0.8rem; color: #cbd5e1; line-height: 1.55;
+        }
+        .card-info-box i { font-size: 1.9rem; color: var(--accent); margin-bottom: 10px; display: block; }
+        .btn-whatsapp-confirm {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 13px 10px; background: #00c853; border: 1px solid #00e676;
+            color: #000; font-weight: 700; font-size: 0.76rem; letter-spacing: 0.8px;
+            border-radius: 5px; cursor: pointer; transition: 0.25s; text-decoration: none;
+        }
+        .btn-whatsapp-confirm:hover { background: #00e676; }
+        .back-step-link {
+            background: none; border: none; color: #94a3b8; font-size: 0.72rem;
+            cursor: pointer; margin-top: 12px; text-decoration: underline;
+        }
+        .back-step-link:hover { color: var(--accent); }
+
+        #payment-result { display: none; text-align: center; padding: 10px 0; }
+        .result-icon { font-size: 2.5rem; margin-bottom: 12px; }
+        .result-title { font-family: 'Syncopate', sans-serif; font-size: 0.9rem; margin-bottom: 10px; letter-spacing: 2px; }
+        .result-desc { font-size: 0.82rem; color: #ccc; line-height: 1.5; margin-bottom: 16px; }
+
+        @media (max-width: 480px) {
+            #payment-modal { padding: 10px; }
+            .payment-content { margin: 8px auto; padding: 16px 14px; }
+            .pay-tabs { gap: 6px; }
+            .pay-tab-btn { font-size: 0.68rem; padding: 10px 6px; }
+        }
 
         /* FORMULÁRIO CONTATO */
-        .form-container { width: 100%; max-width: 450px; background: rgba(0,0,0,0.85); padding: 25px 20px; border: 1px solid var(--border); border-radius: 10px; }
-        input[type="text"], input[type="email"], select, textarea { 
+        .form-container { width: 100%; max-width: 480px; background: rgba(0,0,0,0.88); padding: 25px 20px; border: 1px solid var(--border); border-radius: 10px; }
+        .form-container input[type="text"], 
+        .form-container input[type="email"], 
+        .form-container input[type="datetime-local"],
+        .form-container select, 
+        .form-container textarea { 
             width: 100%; padding: 12px; margin-bottom: 12px; background: #0a0a0a; 
-            border: 1px solid #333; color: #fff; outline: none; font-size: 0.85rem; font-family: 'Inter', sans-serif; 
+            border: 1px solid #333; color: #fff; outline: none; font-size: 0.85rem; font-family: 'Inter', sans-serif; border-radius: 4px;
+            transition: border-color 0.25s;
         }
+        .form-container input:focus, .form-container select:focus, .form-container textarea:focus { border-color: var(--accent); }
+        .form-container select optgroup { background: #05070c; color: var(--accent); font-weight: 700; }
+        .form-container select option { background: #0a0a0a; color: #fff; font-weight: 400; }
         textarea { resize: vertical; min-height: 90px; }
 
-        /* SERVIÇOS */
-        .service-card { background: var(--card-glass); padding: 25px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
-        .service-card h3 { font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 10px; color: var(--accent); }
-        .service-card p { font-size: 0.75rem; color: #bbb; }
+        .cep-status {
+            display: block; font-size: 0.74rem; color: var(--accent);
+            margin: -6px 0 10px 2px; line-height: 1.3; text-align: left;
+        }
 
-        footer { padding: 25px 20px; text-align: center; font-size: 0.55rem; color: #555; border-top: 1px solid #111; letter-spacing: 1px; }
+        @media (max-width: 480px) {
+            .form-container { padding: 20px 15px; }
+        }
+
+        /* Evita zoom automático em inputs no iOS/iPadOS */
+        @media (max-width: 1024px) {
+            #search-input,
+            .card-option-select,
+            #customer-step input,
+            #customer-step select,
+            .form-container input,
+            .form-container select,
+            .form-container textarea {
+                font-size: 16px;
+            }
+        }
+
+        .flatpickr-calendar {
+            max-width: calc(100vw - 20px);
+        }
+
+        /* SERVIÇOS */
+        .service-card {
+            background: var(--card-glass); padding: 24px 20px; border-radius: 8px;
+            border: 1px solid var(--border); text-align: center;
+            display: flex; flex-direction: column; transition: 0.3s;
+            min-width: 0;
+        }
+        .service-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 242, 255, 0.1); }
+        .service-icon { font-size: 2rem; color: var(--accent); margin-bottom: 12px; filter: drop-shadow(0 0 8px rgba(0, 242, 255, 0.35)); }
+        .service-tag {
+            display: inline-block; align-self: center; font-size: 0.62rem; font-weight: 700;
+            letter-spacing: 1.5px; color: var(--accent); background: var(--accent-dim);
+            border: 1px solid var(--border); padding: 3px 10px; border-radius: 20px;
+            margin-bottom: 12px; text-transform: uppercase;
+        }
+        .service-card h3 { font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 10px; color: var(--accent); word-break: break-word; }
+        .service-card p { font-size: 0.78rem; color: #bbb; line-height: 1.5; }
+        .service-list {
+            list-style: none; text-align: left; font-size: 0.74rem; color: #d1d5db;
+            margin: 14px 0 18px; padding-top: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08); flex-grow: 1;
+        }
+        .service-list li { margin-bottom: 7px; display: flex; align-items: flex-start; gap: 8px; line-height: 1.4; }
+        .service-list li i { color: var(--accent); margin-top: 2px; font-size: 0.72rem; flex-shrink: 0; }
+        .service-card .btn { margin-top: auto; }
+
+        .service-badges {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 12px; width: 100%; max-width: 1200px; margin-top: 26px;
+        }
+        .service-badge-item {
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(5, 10, 18, 0.85); border: 1px solid var(--border);
+            padding: 10px 16px; border-radius: 6px; font-size: 0.74rem; color: #d0d7e2;
+        }
+        .service-badge-item i { color: var(--accent); font-size: 0.9rem; }
+        @media (max-width: 640px) { .service-card { padding: 18px 14px; } }
+
+        /* TOASTS */
+        #toast-container {
+            position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+            display: flex; flex-direction: column; gap: 10px; max-width: 320px;
+        }
+        .toast {
+            background: #070b12; border: 1px solid var(--accent); color: #fff;
+            padding: 12px 16px; border-radius: 6px; font-size: 0.78rem; line-height: 1.4;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7); animation: toastIn 0.25s ease;
+        }
+        .toast.error { border-color: var(--danger); color: #ffd4dc; }
+        .toast.success { border-color: var(--success); color: #d6ffe9; }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 640px) {
+            #toast-container { left: 14px; right: 14px; bottom: 14px; max-width: none; }
+        }
+
+        /* FOOTER */
+        footer { 
+            padding: 45px 20px 25px; font-size: 0.75rem; color: #94a3b8;
+            border-top: 1px solid var(--border); background: rgba(0, 0, 0, 0.92); letter-spacing: 0.5px;
+        }
+        .footer-container { max-width: 1200px; margin: 0 auto; }
+        .footer-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 28px; text-align: left; padding-bottom: 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .footer-col { min-width: 0; }
+        .footer-brand { font-family: 'Syncopate', sans-serif; color: #fff; font-size: 0.95rem; font-weight: 700; letter-spacing: 2px; margin-bottom: 10px; }
+        .footer-brand span { color: var(--accent); }
+        .footer-desc { font-size: 0.75rem; color: #94a3b8; line-height: 1.55; margin-bottom: 12px; }
+        .footer-location { display: inline-flex; align-items: center; gap: 7px; font-size: 0.72rem; color: #cbd5e1; }
+        .footer-location i { color: var(--accent); }
+        .footer-col h4 { font-family: 'Syncopate', sans-serif; font-size: 0.72rem; color: var(--accent); letter-spacing: 2px; margin-bottom: 14px; }
+        .footer-nav { display: flex; flex-direction: column; gap: 9px; }
+        .footer-nav a { color: #cbd5e1; text-decoration: none; font-size: 0.76rem; transition: 0.2s; width: fit-content; }
+        .footer-nav a:hover { color: var(--accent); transform: translateX(3px); }
+        .footer-wa-btn {
+            display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px;
+            border: 1px solid var(--border); background: var(--accent-dim); color: #fff;
+            text-decoration: none; border-radius: 5px; font-size: 0.75rem; font-weight: 600;
+            transition: 0.25s; margin-bottom: 14px;
+        }
+        .footer-wa-btn i { color: #25d366; font-size: 1rem; }
+        .footer-wa-btn:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.2); }
+        .footer-payments { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pay-badge {
+            display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px;
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px; font-size: 0.68rem; color: #cbd5e1;
+        }
+        .pay-badge i { color: var(--accent); }
+        .footer-bottom {
+            display: flex; flex-wrap: wrap; justify-content: space-between;
+            align-items: center; gap: 12px; padding-top: 20px; font-size: 0.7rem; color: #94a3b8; letter-spacing: 1px;
+        }
+        .back-to-top {
+            color: var(--accent); text-decoration: none; font-weight: 700; font-size: 0.68rem; letter-spacing: 1.5px;
+            display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px;
+            border: 1px solid var(--border); border-radius: 4px; transition: 0.25s;
+        }
+        .back-to-top:hover { background: var(--accent); color: #000; }
+        @media (max-width: 640px) {
+            .footer-grid { text-align: center; }
+            .footer-nav { align-items: center; }
+            .footer-payments { justify-content: center; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
     </style>
 </head>
 <body>
 
+    <div class="bg-layer" aria-hidden="true">
+        <img src="https://www.meupositivo.com.br/doseujeito/wp-content/uploads/2025/06/chip-ia-hardware.webp"
+             alt=""
+             class="bg-img"
+             referrerpolicy="no-referrer"
+             onerror="this.style.display='none'">
+    </div>
+
     <header>
         <div class="header-center">
-            <!-- LINHA 1: Logo + Nome -->
             <div class="header-left">
-                <img src="https://i.gifer.com/origin/c9/c97052cf6ec794a3c11e7ecc88f7fe52_w200.gif" alt="Logo" class="logo-img">
+                <img src="https://i.gifer.com/origin/c9/c97052cf6ec794a3c11e7ecc88f7fe52_w200.gif" alt="Logo Technocybber" class="logo-img">
                 <div class="logo-text">TECHNOCYBBER</div>
             </div>
-            <!-- LINHA 2: Nav -->
-            <nav>
+            <nav aria-label="Navegação principal">
                 <a href="#home">HOME</a>
                 <a href="#loja">LOJA</a>
                 <a href="#servicos">SERVIÇOS</a>
                 <a href="#contato">CONTATO</a>
             </nav>
         </div>
-        <!-- Carrinho fixo à direita -->
-        <button class="cart-icon-btn" onclick="toggleCart()">
-            <i class="fas fa-shopping-cart"></i>
+        <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Abrir carrinho de compras">
+            <i class="fas fa-shopping-cart" aria-hidden="true"></i>
             <span id="cart-count">0</span>
         </button>
     </header>
 
-    <!-- SIDEBAR CARRINHO -->
-    <div id="cart-sidebar">
+    <div id="cart-backdrop" onclick="toggleCart()"></div>
+    <aside id="cart-sidebar" aria-label="Carrinho de compras">
         <div class="cart-header-row">
             <h2>🛒 CARRINHO</h2>
-            <button class="close-cart-btn" onclick="toggleCart()">✕ FECHAR</button>
+            <button class="close-cart-btn" onclick="toggleCart()" aria-label="Fechar carrinho">✕ FECHAR</button>
         </div>
         <div class="cart-items-list" id="cart-items">
             <p class="cart-empty">CARRINHO VAZIO</p>
@@ -260,171 +659,659 @@
                 <span class="cart-total-label">TOTAL</span>
                 <span class="cart-total-value" id="cart-total">R$ 0,00</span>
             </div>
-            <button onclick="irParaCheckout()" class="btn" style="background: var(--accent); color: #000; font-size: 0.75rem;">FINALIZAR COMPRA</button>
+            <button onclick="irParaCheckout()" class="btn" style="background: var(--accent); color: #000; font-size: 0.78rem;">FINALIZAR COMPRA</button>
+            <button onclick="limparCarrinho()" class="clear-cart-btn">Esvaziar carrinho</button>
         </div>
-    </div>
+    </aside>
 
-    <!-- HOME -->
     <section id="home">
         <h1>TECHNOCYBBER</h1>
-        <p class="hero-subtitle">SOLUÇÕES EM TI | HIGH-PERFORMANCE</p>
+        <p class="hero-subtitle">TECNOLOGIA DE PONTA | SOLUÇÕES EM TI</p>
+        <a href="#loja" class="hero-cta">EXPLORAR HARDWARE</a>
     </section>
 
-    <!-- LOJA -->
     <section id="loja">
         <h2 class="section-title">HARDWARE ELITE</h2>
-        <div class="grid">
 
-            <div class="card">
-                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_716038-MLU78929255715_092024-F.webp" class="product-img">
-                <h3>RTX 3080 OC 10GB GDDR6X</h3>
-                <p>Performance máxima em 4K e IA de última geração.</p>
-                <span class="price">R$ 7.000,00</span>
-                <button onclick="comprarAgora('RTX 3080 OC', 7000.00)" class="btn">COMPRAR AGORA</button>
-                <button onclick="adicionarAoCarrinho('RTX 3080 OC', 7000.00, 'https://http2.mlstatic.com/D_NQ_NP_2X_716038-MLU78929255715_092024-F.webp', this)" class="btn-add">+ CARRINHO</button>
+        <div class="store-controls">
+            <div class="search-wrapper">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                <input type="text" id="search-input" placeholder="Buscar placa de vídeo, SSD, teclado..." oninput="filtrarProdutos()" aria-label="Buscar produtos">
             </div>
-
-            <div class="card">
-                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_977430-MLA104860898285_012026-F.webp" class="product-img">
-                <h3>TECLADO MECÂNICO RGB</h3>
-                <p>Switches ópticos ultra-rápidos e construção premium.</p>
-                <span class="price">R$ 850,00</span>
-                <button onclick="comprarAgora('Teclado Mecânico RGB', 850.00)" class="btn">COMPRAR AGORA</button>
-                <button onclick="adicionarAoCarrinho('Teclado Mecânico RGB', 850.00, 'https://http2.mlstatic.com/D_NQ_NP_2X_977430-MLA104860898285_012026-F.webp', this)" class="btn-add">+ CARRINHO</button>
+            <div class="filter-buttons" role="group" aria-label="Filtrar por categoria">
+                <button class="filter-btn active" onclick="selecionarCategoria('todos', this)">Todos</button>
+                <button class="filter-btn" onclick="selecionarCategoria('hardware', this)">Hardware</button>
+                <button class="filter-btn" onclick="selecionarCategoria('perifericos', this)">Periféricos</button>
+                <button class="filter-btn" onclick="selecionarCategoria('setups', this)">PCs & Setups</button>
             </div>
-
-            <div class="card">
-                <img src="https://m.media-amazon.com/images/I/71Dq8+22SwL._AC_SX679_.jpg" class="product-img">
-                <h3>MOTHERBOARD X670E</h3>
-                <p>Estabilidade extrema para overclocking e PCIe 5.0.</p>
-                <span class="price">R$ 4.250,00</span>
-                <button onclick="comprarAgora('Motherboard X670E', 4250.00)" class="btn">COMPRAR AGORA</button>
-                <button onclick="adicionarAoCarrinho('Motherboard X670E', 4250.00, 'https://m.media-amazon.com/images/I/71Dq8+22SwL._AC_SX679_.jpg', this)" class="btn-add">+ CARRINHO</button>
-            </div>
-
-            <div class="card">
-                <img src="https://m.media-amazon.com/images/I/610sKT7xhPL._AC_SX679_.jpg" class="product-img">
-                <h3>HEADSET HI-RES 7.1</h3>
-                <p>Áudio espacial imersivo e cancelamento de ruído ativo.</p>
-                <span class="price">R$ 1.000,00</span>
-                <button onclick="comprarAgora('Headset Hi-Res 7.1', 1000.00)" class="btn">COMPRAR AGORA</button>
-                <button onclick="adicionarAoCarrinho('Headset Hi-Res 7.1', 1000.00, 'https://m.media-amazon.com/images/I/610sKT7xhPL._AC_SX679_.jpg', this)" class="btn-add">+ CARRINHO</button>
-            </div>
-
-            <div class="card">
-                <img src="https://m.media-amazon.com/images/I/51+dzbnWF9L._AC_SX679_.jpg" class="product-img">
-                <h3>SSD NVME GEN5 2TB</h3>
-                <p>Velocidades insanas de leitura até 12.000 MB/s.</p>
-                <span class="price">R$ 5.500,00</span>
-                <button onclick="comprarAgora('SSD NVME Gen5 2TB', 5500.00)" class="btn">COMPRAR AGORA</button>
-                <button onclick="adicionarAoCarrinho('SSD NVME Gen5 2TB', 5500.00, 'https://m.media-amazon.com/images/I/51+dzbnWF9L._AC_SX679_.jpg', this)" class="btn-add">+ CARRINHO</button>
-            </div>
-
-            <div class="card">
-                <img src="https://m.media-amazon.com/images/I/61XsKRKsGoL._AC_SX679_.jpg" class="product-img">
-                <h3>RAM 32GB DDR5</h3>
-                <p>Frequência de 6000MHz para multitarefa sem gargalos.</p>
-                <span class="price">R$ 5.550,00</span>
-                <button onclick="comprarAgora('RAM 32GB DDR5', 5550.00)" class="btn">COMPRAR AGORA</button>
-                <button onclick="adicionarAoCarrinho('RAM 32GB DDR5', 5550.00, 'https://m.media-amazon.com/images/I/61XsKRKsGoL._AC_SX679_.jpg', this)" class="btn-add">+ CARRINHO</button>
-            </div>
-
-            <div class="card">
-                <img src="https://http2.mlstatic.com/D_NQ_NP_2X_647266-MLB86683348094_062025-F.webp" class="product-img">
-                <h3>PC GAMER RYZEN 5 5600GT</h3>
-                <p>A máquina definitiva montada por nossos especialistas.</p>
-                <span class="price">R$ 6.500,00</span>
-                <button onclick="comprarAgora('PC Gamer Ryzen 5', 6500.00)" class="btn">COMPRAR AGORA</button>
-                <button onclick="adicionarAoCarrinho('PC Gamer Ryzen 5', 6500.00, 'https://http2.mlstatic.com/D_NQ_NP_2X_647266-MLB86683348094_062025-F.webp', this)" class="btn-add">+ CARRINHO</button>
-            </div>
-
-            <div class="card">
-                <img src="https://tse4.mm.bing.net/th/id/OIP.YVrwoGyy78h3c4L4rba-hAHaEK?pid=ImgDet&w=474&h=266&rs=1&o=7&rm=3" class="product-img">
-                <h3>CENTRAL DE JOGOS</h3>
-                <p>Setup completo pronto para streaming e alta performance.</p>
-                <span class="price">A PARTIR DE R$ 300,00</span>
-                <button onclick="comprarAgora('Central de Jogos', 300.00)" class="btn">COMPRAR AGORA</button>
-                <button onclick="adicionarAoCarrinho('Central de Jogos', 300.00, 'https://tse4.mm.bing.net/th/id/OIP.YVrwoGyy78h3c4L4rba-hAHaEK?pid=ImgDet&w=474&h=266&rs=1&o=7&rm=3', this)" class="btn-add">+ CARRINHO</button>
-            </div>
-
         </div>
+
+        <div class="grid" id="products-grid"></div>
     </section>
 
-    <!-- MODAL PAGAMENTO -->
-    <div id="payment-modal">
+    <div id="payment-modal" role="dialog" aria-modal="true" aria-label="Finalizar compra">
         <div class="payment-content">
-            <button onclick="fecharModal()" class="btn" style="width:auto; padding:8px 16px; margin-bottom:20px;">← VOLTAR</button>
-            <div id="email-step">
-                <h3>INFORME SEU E-MAIL</h3>
-                <input type="email" id="input-email-cliente" placeholder="seu@email.com">
-                <button onclick="validarEIniciarCheckoutMP()" class="btn" style="background:var(--accent); color:#000;">PROSSEGUIR</button>
+            <button onclick="fecharModal()" class="btn" style="width:auto; padding:8px 16px; margin-bottom:16px; margin-top:0;">← VOLTAR</button>
+            
+            <div class="checkout-summary" id="checkout-summary">
+                <div class="checkout-summary-title">Resumo do Pedido</div>
+                <div class="checkout-summary-items" id="summary-items-text"></div>
+                <div class="checkout-summary-total" id="summary-total-text"></div>
             </div>
-            <div id="paymentBrick_container"></div>
+
+            <!-- ETAPA 1: DADOS DO COMPRADOR E ENTREGA -->
+            <div id="customer-step">
+                <h3>DADOS DO COMPRADOR &amp; ENTREGA</h3>
+                <input type="text" id="chk-nome" placeholder="NOME COMPLETO" autocomplete="name" aria-label="Nome completo">
+                <input type="tel" id="chk-whatsapp" placeholder="WHATSAPP (11) 99999-9999" maxlength="15" inputmode="numeric" oninput="mascaraWhatsApp(this)" autocomplete="tel" aria-label="WhatsApp">
+                <input type="email" id="chk-email" placeholder="SEU E-MAIL (seu@email.com)" autocomplete="email" aria-label="Seu e-mail">
+
+                <select id="chk-tipo-entrega" onchange="alternarCamposEntrega()" aria-label="Tipo de entrega">
+                    <option value="entrega">ENTREGA NO ENDEREÇO</option>
+                    <option value="retirada">RETIRADA / SERVIÇO DIGITAL (A COMBINAR)</option>
+                </select>
+
+                <div id="chk-endereco-box">
+                    <input type="text" id="chk-cep" placeholder="CEP DE ENTREGA (00000-000)" maxlength="9" inputmode="numeric" oninput="mascaraEBuscarCEPCheckout(this)" autocomplete="postal-code" aria-label="CEP de entrega">
+                    <span id="chk-cep-status" class="cep-status" style="display:none;"></span>
+                    <input type="text" id="chk-endereco" placeholder="RUA E NÚMERO" autocomplete="street-address" aria-label="Rua e número de entrega">
+                    <input type="text" id="chk-complemento" placeholder="COMPLEMENTO / REFERÊNCIA (OPCIONAL)" aria-label="Complemento">
+                </div>
+
+                <div id="chk-retirada-info" class="checkout-retirada-info">
+                    Após finalizar, combinaremos os detalhes de retirada ou entrega digital diretamente pelo seu WhatsApp.
+                </div>
+
+                <button onclick="avancarParaPagamento()" class="btn" style="background:var(--accent); color:#000;">PROSSEGUIR PARA PAGAMENTO</button>
+            </div>
+
+            <!-- ETAPA 2: PIX AUTOMÁTICO OU LINK CARTÃO/BOLETO VIA WHATSAPP -->
+            <div id="payment-step">
+                <div class="order-badge" id="badge-codigo-pedido">PEDIDO #TC-0000</div>
+                <h3>ESCOLHA COMO PAGAR</h3>
+
+                <div class="pay-tabs">
+                    <button type="button" class="pay-tab-btn active" id="btn-tab-pix" onclick="selecionarAbaPagamento('pix')">
+                        <i class="fas fa-qrcode"></i> PIX NA HORA
+                    </button>
+                    <button type="button" class="pay-tab-btn" id="btn-tab-cartao" onclick="selecionarAbaPagamento('cartao')">
+                        <i class="fas fa-credit-card"></i> CARTÃO / BOLETO
+                    </button>
+                </div>
+
+                <div id="painel-pix">
+                    <div class="pix-box">
+                        <div class="pix-qr-box" id="pix-qrcode-wrap"></div>
+                        <p class="pix-key-info">
+                            Chave Pix: <strong id="pix-chave-visivel"></strong><br>
+                            Recebedor: <span id="pix-nome-visivel"></span>
+                        </p>
+                        <input type="text" readonly class="pix-code-input" id="pix-copy-input" aria-label="Código Pix Copia e Cola">
+                        <button type="button" onclick="copiarPix()" class="btn" style="background: var(--accent); color: #000;">
+                            <i class="fas fa-copy"></i> COPIAR CÓDIGO PIX
+                        </button>
+                    </div>
+                    <button type="button" onclick="finalizarPedidoWhatsApp('PIX (QR Code / Copia e Cola)')" class="btn-whatsapp-confirm">
+                        <i class="fab fa-whatsapp" style="font-size:1.1rem;"></i> JÁ PAGUEI / ENVIAR PEDIDO NO WHATSAPP
+                    </button>
+                </div>
+
+                <div id="painel-cartao" style="display:none;">
+                    <div class="card-info-box">
+                        <i class="fas fa-lock" aria-hidden="true"></i>
+                        Envie seu pedido para o nosso WhatsApp para receber na hora o <strong>link oficial de pagamento (Mercado Pago)</strong> e pagar com Cartão de Crédito ou Boleto com segurança.
+                    </div>
+                    <a id="link-pagamento-externo-btn" href="#" target="_blank" rel="noopener noreferrer" class="btn" style="display:none; text-decoration:none; margin-bottom:10px;">
+                        ABRIR LINK DE PAGAMENTO ONLINE
+                    </a>
+                    <button type="button" onclick="finalizarPedidoWhatsApp('Cartão de Crédito / Boleto (Link de Pagamento)')" class="btn-whatsapp-confirm">
+                        <i class="fab fa-whatsapp" style="font-size:1.1rem;"></i> FINALIZAR E RECEBER LINK NO WHATSAPP
+                    </button>
+                </div>
+
+                <button type="button" class="back-step-link" onclick="voltarParaDadosCliente()">← Alterar dados do comprador</button>
+            </div>
+
+            <!-- ETAPA 3: CONFIRMAÇÃO FINAL -->
+            <div id="payment-result"></div>
         </div>
     </div>
 
-    <!-- SERVIÇOS -->
     <section id="servicos">
         <h2 class="section-title">SERVIÇOS TÉCNICOS</h2>
         <div class="grid">
             <div class="service-card">
+                <i class="fas fa-screwdriver-wrench service-icon" aria-hidden="true"></i>
+                <span class="service-tag">Hardware</span>
                 <h3>MONTAGEM ELITE</h3>
-                <p>Montagem artesanal, cable management e testes de estresse térmico.</p>
+                <p>Montagem artesanal, cable management profissional e testes completos de estresse térmico.</p>
+                <ul class="service-list">
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Organização limpa e fluxo de ar</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Teste de estresse CPU e GPU</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Atualização de BIOS inclusa</li>
+                </ul>
+                <button type="button" class="btn" onclick="selecionarServico('Peças / Hardware')">SOLICITAR SERVIÇO</button>
             </div>
+
             <div class="service-card">
+                <i class="fas fa-gauge-high service-icon" aria-hidden="true"></i>
+                <span class="service-tag">Performance</span>
                 <h3>OTIMIZAÇÃO DE OS</h3>
-                <p>Remoção de bloatwares e ajuste de BIOS para máxima performance.</p>
+                <p>Remoção de bloatwares, ajuste fino de BIOS e drivers para máxima performance em jogos e trabalho.</p>
+                <ul class="service-list">
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Redução de latência e gargalos</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Ajuste XMP/EXPO de memórias</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Drivers limpos e configurados</li>
+                </ul>
+                <button type="button" class="btn" onclick="selecionarServico('Suporte Técnico')">SOLICITAR SERVIÇO</button>
+            </div>
+
+            <div class="service-card">
+                <i class="fas fa-laptop-medical service-icon" aria-hidden="true"></i>
+                <span class="service-tag">Manutenção</span>
+                <h3>FORMATAÇÃO &amp; UPGRADE</h3>
+                <p>Instalação limpa do sistema, backup seguro de dados, higienização interna e troca de peças.</p>
+                <ul class="service-list">
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Pasta térmica de alta performance</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Limpeza técnica antiestática</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Diagnóstico completo de falhas</li>
+                </ul>
+                <button type="button" class="btn" onclick="selecionarServico('Formatação')">SOLICITAR SERVIÇO</button>
+            </div>
+
+            <div class="service-card">
+                <i class="fas fa-qrcode service-icon" aria-hidden="true"></i>
+                <span class="service-tag">Soluções Web</span>
+                <h3>SOLUÇÕES DIGITAIS</h3>
+                <p>Cardápios digitais interativos para restaurantes e buffets, além de sistemas de agendamento online.</p>
+                <ul class="service-list">
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Cardápio Digital via QR Code</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Cardápios para Eventos e Buffets</li>
+                    <li><i class="fas fa-check" aria-hidden="true"></i> Sistema de Agendamento Online</li>
+                </ul>
+                <button type="button" class="btn" onclick="selecionarServico('Cardápio Digital')">SOLICITAR SERVIÇO</button>
+            </div>
+        </div>
+
+        <div class="service-badges">
+            <div class="service-badge-item">
+                <i class="fas fa-shield-halved" aria-hidden="true"></i>
+                <span>Garantia Técnica de 90 Dias</span>
+            </div>
+            <div class="service-badge-item">
+                <i class="fas fa-bolt" aria-hidden="true"></i>
+                <span>Atendimento Presencial e Remoto</span>
+            </div>
+            <div class="service-badge-item">
+                <i class="fas fa-temperature-low" aria-hidden="true"></i>
+                <span>Relatório de Testes Térmicos</span>
             </div>
         </div>
     </section>
 
-    <!-- CONTATO -->
     <section id="contato">
         <div class="form-container">
-            <h2 style="text-align:center; margin-bottom:20px; font-family:'Syncopate'; font-size:0.7rem; color:var(--accent);">CONSULTORIA TÉCNICA</h2>
-            <input type="text" id="nome" placeholder="SEU NOME">
-            <input type="text" id="endereco" placeholder="SEU ENDEREÇO COMPLETO">
-            <select id="tipo_solicitacao">
+            <h2 style="text-align:center; margin-bottom:20px; font-family:'Syncopate'; font-size:0.75rem; color:var(--accent);">CONSULTORIA TÉCNICA</h2>
+            <input type="text" id="nome" placeholder="SEU NOME" aria-label="Seu nome">
+            
+            <input type="text" id="cep" placeholder="SEU CEP (00000-000)" maxlength="9" inputmode="numeric" oninput="mascaraEBuscarCEP(this)" aria-label="Seu CEP">
+            <span id="cep-status" class="cep-status" style="display:none;"></span>
+
+            <input type="text" id="endereco" placeholder="RUA E NÚMERO" aria-label="Rua e número da residência">
+
+            <select id="tipo_solicitacao" aria-label="Tipo de solicitação">
                 <option value="" disabled selected>TIPO DE SOLICITAÇÃO</option>
-                <option value="Formatação">FORMATAÇÃO</option>
-                <option value="Peças / Hardware">PEÇAS / HARDWARE</option>
-                <option value="Suporte Técnico">SUPORTE TÉCNICO</option>
+                <optgroup label="── INFORMÁTICA &amp; HARDWARE ──">
+                    <option value="Formatação">FORMATAÇÃO</option>
+                    <option value="Peças / Hardware">PEÇAS / HARDWARE</option>
+                    <option value="Suporte Técnico">SUPORTE TÉCNICO</option>
+                </optgroup>
+                <optgroup label="── SOLUÇÕES DIGITAIS ──">
+                    <option value="Cardápio Digital">CARDÁPIO DIGITAL</option>
+                    <option value="Cardápio para Eventos / Buffet">CARDÁPIO PARA EVENTOS / BUFFET</option>
+                    <option value="Sistema de Agendamento Online">SISTEMA DE AGENDAMENTO ONLINE</option>
+                </optgroup>
             </select>
-            <input type="text" id="data" placeholder="DATA DESEJADA">
-            <textarea id="descricao" placeholder="DESCREVA O PROBLEMA OU NECESSIDADE"></textarea>
-            <button onclick="enviar()" class="btn" style="width:100%;">ENVIAR REQUISIÇÃO</button>
+            <input type="text" id="data" placeholder="DATA DESEJADA" aria-label="Data desejada">
+            <textarea id="descricao" placeholder="DESCREVA O PROBLEMA OU NECESSIDADE" aria-label="Descrição do problema"></textarea>
+            <button onclick="enviar()" class="btn" style="width:100%;">ENVIAR REQUISIÇÃO VIA WHATSAPP</button>
         </div>
     </section>
 
     <footer>
-        <p>TECHNOCYBBER // EST. 2035 // HIGH-END HARDWARE DIVISION</p>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">TECHNO<span>CYBBER</span></div>
+                    <p class="footer-desc">Hardware de alta performance, montagem artesanal, otimização de sistemas e soluções digitais sob medida.</p>
+                    <span class="footer-location">
+                        <i class="fas fa-location-dot" aria-hidden="true"></i>
+                        São Paulo - SP | Atendimento Presencial e Remoto
+                    </span>
+                </div>
+
+                <div class="footer-col">
+                    <h4>NAVEGAÇÃO</h4>
+                    <div class="footer-nav">
+                        <a href="#home">Home</a>
+                        <a href="#loja">Loja Hardware</a>
+                        <a href="#servicos">Garantia &amp; Serviços</a>
+                        <a href="#contato">Agendar Consultoria</a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>ATENDIMENTO &amp; PAGAMENTO</h4>
+                    <a href="https://wa.me/5511986756309" target="_blank" rel="noopener noreferrer" class="footer-wa-btn">
+                        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        WhatsApp Suporte Técnico
+                    </a>
+                    <div class="footer-payments" aria-label="Formas de pagamento aceitas">
+                        <span class="pay-badge"><i class="fas fa-qrcode" aria-hidden="true"></i> Pix</span>
+                        <span class="pay-badge"><i class="fas fa-credit-card" aria-hidden="true"></i> Cartão</span>
+                        <span class="pay-badge"><i class="fas fa-barcode" aria-hidden="true"></i> Boleto</span>
+                        <span class="pay-badge"><i class="fas fa-lock" aria-hidden="true"></i> Mercado Pago</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2035 TECHNOCYBBER // DIVISÃO DE HARDWARE DE PONTA</p>
+                <a href="#home" class="back-to-top">VOLTAR AO TOPO <i class="fas fa-arrow-up" aria-hidden="true"></i></a>
+            </div>
+        </div>
     </footer>
 
+    <div id="toast-container" aria-live="polite"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
 
     <script>
-        const mp = new MercadoPago('APP_USR-75a7db7d-cf21-488b-afcc-c46d03085ded');
+        // =======================================================
+        // CONFIGURAÇÕES DA LOJA (EDITE COM SEUS DADOS REAIS)
+        // =======================================================
+        const CONFIG_LOJA = {
+            whatsapp: '5511986756309',
+            chavePix: '+5511986756309',
+            nomeRecebedor: 'TECHNOCYBBER',
+            cidadeRecebedor: 'SAO PAULO',
+            linkPagamentoExterno: ''
+        };
 
-        let carrinho = [];
+        // =======================================================
+        // CATÁLOGO DE PRODUTOS
+        // =======================================================
+        const PRODUTOS = [
+            {
+                id: 'rtx-3080-oc',
+                nome: 'RTX 3080 OC 10GB GDDR6X',
+                categoria: 'hardware',
+                desc: 'Performance máxima em 4K e IA de última geração.',
+                preco: 7000.00,
+                img: 'https://http2.mlstatic.com/D_NQ_NP_2X_716038-MLU78929255715_092024-F.webp'
+            },
+            {
+                id: 'teclado-mecanico-rgb',
+                nome: 'TECLADO MECÂNICO RGB',
+                categoria: 'perifericos',
+                desc: 'Switches ópticos ultra-rápidos e construção premium.',
+                preco: 850.00,
+                img: 'https://http2.mlstatic.com/D_NQ_NP_2X_977430-MLA104860898285_012026-F.webp'
+            },
+            {
+                id: 'motherboard-x670e',
+                nome: 'MOTHERBOARD X670E',
+                categoria: 'hardware',
+                desc: 'Estabilidade extrema para overclocking e PCIe 5.0.',
+                preco: 4250.00,
+                img: 'https://m.media-amazon.com/images/I/71Dq8+22SwL._AC_SX679_.jpg'
+            },
+            {
+                id: 'headset-hi-res-71',
+                nome: 'HEADSET HI-RES 7.1',
+                categoria: 'perifericos',
+                desc: 'Áudio espacial imersivo e cancelamento de ruído ativo.',
+                preco: 1000.00,
+                img: 'https://m.media-amazon.com/images/I/610sKT7xhPL._AC_SX679_.jpg'
+            },
+            {
+                id: 'ssd-nvme-gen5-2tb',
+                nome: 'SSD NVME GEN5 2TB',
+                categoria: 'hardware',
+                desc: 'Velocidades insanas de leitura até 12.000 MB/s.',
+                preco: 5500.00,
+                img: 'https://m.media-amazon.com/images/I/51+dzbnWF9L._AC_SX679_.jpg'
+            },
+            {
+                id: 'ram-32gb-ddr5',
+                nome: 'RAM 32GB DDR5',
+                categoria: 'hardware',
+                desc: 'Frequência de 6000MHz para multitarefa sem gargalos.',
+                preco: 5550.00,
+                img: 'https://m.media-amazon.com/images/I/61XsKRKsGoL._AC_SX679_.jpg'
+            },
+            {
+                id: 'pc-gamer-ryzen-5',
+                nome: 'PC GAMER RYZEN 5 5600GT',
+                categoria: 'setups',
+                desc: 'A máquina definitiva montada por nossos especialistas.',
+                preco: 6500.00,
+                img: 'https://http2.mlstatic.com/D_NQ_NP_2X_899258-MLB79822305901_102024-F-pc-gamer-amd-ryzen-5-5600gt-16gb-ssd-480gb-500w-win-10.webp'
+            },
+            {
+                id: 'central-de-jogos',
+                nome: 'CENTRAL DE JOGOS',
+                categoria: 'setups',
+                desc: 'Setup completo pronto para streaming e alta performance.',
+                preco: 300.00,
+                img: 'https://tse4.mm.bing.net/th/id/OIP.YVrwoGyy78h3c4L4rba-hAHaEK?pid=ImgDet&w=474&h=266&rs=1&o=7&rm=3',
+                opcoes: [
+                    { label: 'Plano Básico — R$ 300,00', nomeExtra: 'Básico', preco: 300.00 },
+                    { label: 'Setup Streaming — R$ 650,00', nomeExtra: 'Streaming', preco: 650.00 },
+                    { label: 'Setup Pro Elite — R$ 1.200,00', nomeExtra: 'Pro Elite', preco: 1200.00 }
+                ]
+            }
+        ];
+
+        const FALLBACK_IMG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="#0d1520"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#00f2ff" font-family="sans-serif" font-size="14">TECHNOCYBBER</text></svg>'
+        );
+
+        let categoriaAtual = 'todos';
+        let carrinho = carregarCarrinho();
         let v_atual = 0;
-        let p_atual = "";
+        let p_atual = '';
+        let codigoPedidoAtual = '';
+        let cliente_checkout = null;
+        let compraDoCarrinho = false;
+
+        // ========================
+        // UTILITÁRIOS
+        // ========================
+        function mostrarToast(mensagem, tipo = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${tipo}`;
+            toast.textContent = mensagem;
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.25s';
+                setTimeout(() => toast.remove(), 250);
+            }, 3200);
+        }
+
+        function formatarMoeda(valor) {
+            return 'R$ ' + Number(valor).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
+        }
+
+        function atualizarScrollBody() {
+            const cartAberto = document.getElementById('cart-sidebar').classList.contains('active');
+            const modalAberto = document.getElementById('payment-modal').style.display === 'block';
+            document.body.style.overflow = (cartAberto || modalAberto) ? 'hidden' : '';
+        }
+
+        function mascaraWhatsApp(input) {
+            const d = input.value.replace(/\D/g, '').slice(0, 11);
+            if (d.length > 10) {
+                input.value = `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+            } else if (d.length > 6) {
+                input.value = `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+            } else if (d.length > 2) {
+                input.value = `(${d.slice(0, 2)}) ${d.slice(2)}`;
+            } else {
+                input.value = d;
+            }
+        }
+
+        async function consultarViaCEP(cep, statusEl, enderecoEl, aoEncontrarRua) {
+            statusEl.style.display = 'block';
+            statusEl.textContent = 'Buscando endereço...';
+
+            try {
+                const resp = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                if (!resp.ok) throw new Error('Falha na consulta');
+                const data = await resp.json();
+
+                if (data.erro) {
+                    statusEl.style.display = 'none';
+                    mostrarToast('CEP não encontrado. Digite sua rua e número manualmente.', 'error');
+                    return;
+                }
+
+                const cidadeUf = [data.localidade, data.uf].filter(Boolean).join('/');
+                const bairroCidade = [data.bairro, cidadeUf].filter(Boolean).join(' — ');
+
+                if (data.logradouro) {
+                    aoEncontrarRua(data.logradouro, bairroCidade);
+                    enderecoEl.value = `${data.logradouro}, `;
+                    statusEl.textContent = bairroCidade;
+                    statusEl.style.display = bairroCidade ? 'block' : 'none';
+                    enderecoEl.focus();
+                    const pos = enderecoEl.value.length;
+                    enderecoEl.setSelectionRange(pos, pos);
+                    mostrarToast('Rua encontrada! Acrescente apenas o número no mesmo campo.', 'success');
+                } else {
+                    aoEncontrarRua('', bairroCidade);
+                    enderecoEl.value = '';
+                    statusEl.textContent = bairroCidade;
+                    statusEl.style.display = bairroCidade ? 'block' : 'none';
+                    enderecoEl.focus();
+                    mostrarToast('CEP único da cidade. Digite sua rua e número.', 'info');
+                }
+            } catch {
+                statusEl.style.display = 'none';
+                mostrarToast('Não foi possível consultar o CEP. Digite sua rua e número manualmente.', 'error');
+            }
+        }
+
+        // ========================
+        // GERADOR DE PIX ESTÁTICO (PADRÃO BR CODE / BANCO CENTRAL)
+        // ========================
+        function normalizarTextoPix(str, maxLen) {
+            return String(str || '')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^A-Za-z0-9 ]/g, ' ')
+                .trim()
+                .toUpperCase()
+                .slice(0, maxLen);
+        }
+
+        function tlv(id, valor) {
+            const str = String(valor);
+            return `${id}${String(str.length).padStart(2, '0')}${str}`;
+        }
+
+        function crc16CCITT(str) {
+            let crc = 0xFFFF;
+            for (let i = 0; i < str.length; i++) {
+                crc ^= str.charCodeAt(i) << 8;
+                for (let j = 0; j < 8; j++) {
+                    crc = (crc & 0x8000) !== 0
+                        ? ((crc << 1) ^ 0x1021) & 0xFFFF
+                        : (crc << 1) & 0xFFFF;
+                }
+            }
+            return crc.toString(16).toUpperCase().padStart(4, '0');
+        }
+
+        function gerarPayloadPix({ chave, nome, cidade, valor, txid }) {
+            const nomeLimpo = normalizarTextoPix(nome, 25) || 'TECHNOCYBBER';
+            const cidadeLimpa = normalizarTextoPix(cidade, 15) || 'SAO PAULO';
+            const txidLimpo = String(txid || '***').replace(/[^A-Za-z0-9]/g, '').slice(0, 25) || '***';
+
+            const contaPix = tlv('00', 'br.gov.bcb.pix') + tlv('01', chave.trim());
+            const campoAdicional = tlv('05', txidLimpo);
+
+            const payloadSemCrc =
+                tlv('00', '01') +
+                tlv('26', contaPix) +
+                tlv('52', '0000') +
+                tlv('53', '986') +
+                (valor > 0 ? tlv('54', Number(valor).toFixed(2)) : '') +
+                tlv('58', 'BR') +
+                tlv('59', nomeLimpo) +
+                tlv('60', cidadeLimpa) +
+                tlv('62', campoAdicional) +
+                '6304';
+
+            return payloadSemCrc + crc16CCITT(payloadSemCrc);
+        }
+
+        // ========================
+        // SERVIÇOS
+        // ========================
+        function selecionarServico(valor) {
+            const selectEl = document.getElementById('tipo_solicitacao');
+            const contatoSection = document.getElementById('contato');
+
+            if (selectEl) {
+                selectEl.value = valor;
+                selectEl.style.borderColor = 'var(--accent)';
+                setTimeout(() => { selectEl.style.borderColor = ''; }, 2200);
+            }
+            if (contatoSection) contatoSection.scrollIntoView({ behavior: 'smooth' });
+
+            mostrarToast(`Serviço "${valor}" selecionado! Complete seus dados abaixo.`, 'info');
+            setTimeout(() => {
+                const nomeEl = document.getElementById('nome');
+                if (nomeEl) nomeEl.focus({ preventScroll: true });
+            }, 600);
+        }
+
+        // ========================
+        // LOJA & FILTROS
+        // ========================
+        function selecionarCategoria(cat, btnEl) {
+            categoriaAtual = cat;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+            filtrarProdutos();
+        }
+
+        function filtrarProdutos() {
+            const termo = (document.getElementById('search-input').value || '').toLowerCase().trim();
+            const filtrados = PRODUTOS.filter(p => {
+                const matchCat = categoriaAtual === 'todos' || p.categoria === categoriaAtual;
+                const matchBusca = !termo || p.nome.toLowerCase().includes(termo) || p.desc.toLowerCase().includes(termo);
+                return matchCat && matchBusca;
+            });
+            renderProdutos(filtrados);
+        }
+
+        function atualizarPrecoCard(prodId) {
+            const prod = PRODUTOS.find(p => p.id === prodId);
+            const selectEl = document.getElementById(`opt-${prodId}`);
+            const priceEl = document.getElementById(`price-${prodId}`);
+            if (!prod || !selectEl || !priceEl) return;
+            const opcao = prod.opcoes[Number(selectEl.value)];
+            priceEl.textContent = formatarMoeda(opcao.preco);
+        }
+
+        function renderProdutos(lista) {
+            const grid = document.getElementById('products-grid');
+            if (lista.length === 0) {
+                grid.innerHTML = '<div class="empty-results">NENHUM PRODUTO ENCONTRADO PARA SUA BUSCA.</div>';
+                return;
+            }
+
+            grid.innerHTML = lista.map(prod => {
+                const temOpcoes = Array.isArray(prod.opcoes) && prod.opcoes.length > 0;
+                const precoInicial = temOpcoes
+                    ? `A PARTIR DE ${formatarMoeda(prod.opcoes[0].preco)}`
+                    : formatarMoeda(prod.preco);
+
+                const selectHtml = temOpcoes
+                    ? `<select id="opt-${prod.id}" class="card-option-select" onchange="atualizarPrecoCard('${prod.id}')" aria-label="Selecionar plano para ${escapeHtml(prod.nome)}">
+                        ${prod.opcoes.map((op, i) => `<option value="${i}">${escapeHtml(op.label)}</option>`).join('')}
+                       </select>`
+                    : '';
+
+                return `
+                    <div class="card">
+                        <div class="product-img-wrap">
+                            <img src="${prod.img}" alt="${escapeHtml(prod.nome)}" class="product-img" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_IMG}';">
+                        </div>
+                        <h3>${escapeHtml(prod.nome)}</h3>
+                        <p>${escapeHtml(prod.desc)}</p>
+                        ${selectHtml}
+                        <span class="price" id="price-${prod.id}">${precoInicial}</span>
+                        <button onclick="comprarAgora('${prod.id}')" class="btn">COMPRAR AGORA</button>
+                        <button onclick="adicionarAoCarrinho('${prod.id}', this)" class="btn-add">+ CARRINHO</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function obterItemSelecionado(prodId) {
+            const prod = PRODUTOS.find(p => p.id === prodId);
+            if (!prod) return null;
+
+            if (prod.opcoes && prod.opcoes.length > 0) {
+                const selectEl = document.getElementById(`opt-${prodId}`);
+                const idx = selectEl ? Number(selectEl.value) : 0;
+                const op = prod.opcoes[idx] || prod.opcoes[0];
+                return {
+                    id: `${prod.id}--${idx}`,
+                    nome: `${prod.nome} (${op.nomeExtra})`,
+                    preco: op.preco,
+                    img: prod.img
+                };
+            }
+
+            return { id: prod.id, nome: prod.nome, preco: prod.preco, img: prod.img };
+        }
 
         // ========================
         // CARRINHO
         // ========================
-        function toggleCart() {
-            document.getElementById('cart-sidebar').classList.toggle('active');
+        function carregarCarrinho() {
+            try {
+                const salvo = localStorage.getItem('technocybber_cart');
+                return salvo ? JSON.parse(salvo) : [];
+            } catch { return []; }
         }
 
-        function adicionarAoCarrinho(nome, preco, img, btn) {
-            const existente = carrinho.find(i => i.nome === nome);
-            if (existente) { existente.qtd++; }
-            else { carrinho.push({ nome, preco, img, qtd: 1 }); }
-            btn.textContent = '✔ ADICIONADO';
-            btn.classList.add('added');
-            setTimeout(() => { btn.textContent = '+ CARRINHO'; btn.classList.remove('added'); }, 1500);
+        function salvarCarrinho() {
+            try { localStorage.setItem('technocybber_cart', JSON.stringify(carrinho)); } catch {}
+        }
+
+        function toggleCart(forceState) {
+            const sidebar = document.getElementById('cart-sidebar');
+            const backdrop = document.getElementById('cart-backdrop');
+            const abrir = typeof forceState === 'boolean' ? forceState : !sidebar.classList.contains('active');
+            sidebar.classList.toggle('active', abrir);
+            backdrop.classList.toggle('active', abrir);
+            atualizarScrollBody();
+        }
+
+        function adicionarAoCarrinho(prodId, btn) {
+            const item = obterItemSelecionado(prodId);
+            if (!item) return;
+
+            const existente = carrinho.find(i => i.id === item.id);
+            if (existente) existente.qtd++;
+            else carrinho.push({ ...item, qtd: 1 });
+
+            salvarCarrinho();
             renderCarrinho();
+            mostrarToast(`${item.nome} adicionado ao carrinho!`, 'success');
+
+            if (btn) {
+                btn.textContent = '✔ ADICIONADO';
+                btn.classList.add('added');
+                setTimeout(() => {
+                    btn.textContent = '+ CARRINHO';
+                    btn.classList.remove('added');
+                }, 1400);
+            }
         }
 
         function renderCarrinho() {
@@ -433,8 +1320,7 @@
             const countEl = document.getElementById('cart-count');
             const totalEl = document.getElementById('cart-total');
 
-            const totalQtd = carrinho.reduce((s, i) => s + i.qtd, 0);
-            countEl.innerText = totalQtd;
+            countEl.innerText = carrinho.reduce((s, i) => s + i.qtd, 0);
 
             if (carrinho.length === 0) {
                 list.innerHTML = '<p class="cart-empty">CARRINHO VAZIO</p>';
@@ -448,119 +1334,458 @@
                 total += item.preco * item.qtd;
                 return `
                     <div class="cart-item">
-                        <img src="${item.img}" alt="${item.nome}">
+                        <img src="${item.img}" alt="${escapeHtml(item.nome)}" onerror="this.onerror=null;this.src='${FALLBACK_IMG}';">
                         <div class="cart-item-info">
-                            <h4>${item.nome}</h4>
-                            <span class="item-price">R$ ${(item.preco * item.qtd).toLocaleString('pt-BR', {minimumFractionDigits:2})}</span>
+                            <h4>${escapeHtml(item.nome)}</h4>
+                            <span class="item-price">${formatarMoeda(item.preco * item.qtd)}</span>
                             <div class="cart-item-qty">
-                                <button class="qty-btn" onclick="alterarQtd(${idx}, -1)">−</button>
+                                <button class="qty-btn" onclick="alterarQtd(${idx}, -1)" aria-label="Diminuir quantidade">−</button>
                                 <span>${item.qtd}</span>
-                                <button class="qty-btn" onclick="alterarQtd(${idx}, 1)">+</button>
+                                <button class="qty-btn" onclick="alterarQtd(${idx}, 1)" aria-label="Aumentar quantidade">+</button>
                                 <button class="remove-btn" onclick="removerItem(${idx})">✕ remover</button>
                             </div>
                         </div>
                     </div>`;
             }).join('');
-            totalEl.textContent = 'R$ ' + total.toLocaleString('pt-BR', {minimumFractionDigits:2});
+            totalEl.textContent = formatarMoeda(total);
         }
 
         function alterarQtd(idx, delta) {
+            if (!carrinho[idx]) return;
             carrinho[idx].qtd += delta;
             if (carrinho[idx].qtd <= 0) carrinho.splice(idx, 1);
+            salvarCarrinho();
             renderCarrinho();
         }
 
         function removerItem(idx) {
             carrinho.splice(idx, 1);
+            salvarCarrinho();
             renderCarrinho();
         }
 
+        function limparCarrinho() {
+            carrinho = [];
+            salvarCarrinho();
+            renderCarrinho();
+            mostrarToast('Carrinho esvaziado.');
+        }
+
         function irParaCheckout() {
-            if (carrinho.length === 0) return alert("Carrinho vazio!");
+            if (carrinho.length === 0) {
+                mostrarToast('Seu carrinho está vazio!', 'error');
+                return;
+            }
+            compraDoCarrinho = true;
             v_atual = carrinho.reduce((s, i) => s + i.preco * i.qtd, 0);
             p_atual = carrinho.map(i => `${i.qtd}x ${i.nome}`).join(', ');
-            toggleCart();
+            toggleCart(false);
             abrirPagamentoModal();
         }
 
         // ========================
-        // COMPRA INDIVIDUAL
+        // CHECKOUT ESTÁTICO (DADOS + PIX QR CODE + WHATSAPP)
         // ========================
-        function comprarAgora(nome, preco) {
-            v_atual = preco;
-            p_atual = nome;
+        let chkUltimoCepBuscado = '';
+        let chkUltimaRuaBase = '';
+        let chkUltimoBairroCidade = '';
+
+        function alternarCamposEntrega() {
+            const tipo = document.getElementById('chk-tipo-entrega').value;
+            const endBox = document.getElementById('chk-endereco-box');
+            const retInfo = document.getElementById('chk-retirada-info');
+            if (tipo === 'entrega') {
+                endBox.style.display = 'block';
+                retInfo.style.display = 'none';
+            } else {
+                endBox.style.display = 'none';
+                retInfo.style.display = 'block';
+            }
+        }
+
+        function mascaraEBuscarCEPCheckout(input) {
+            const digitos = input.value.replace(/\D/g, '').slice(0, 8);
+            input.value = digitos.length > 5 ? `${digitos.slice(0, 5)}-${digitos.slice(5)}` : digitos;
+
+            if (digitos.length === 8 && digitos !== chkUltimoCepBuscado) {
+                chkUltimoCepBuscado = digitos;
+                chkUltimaRuaBase = '';
+                chkUltimoBairroCidade = '';
+                consultarViaCEP(
+                    digitos,
+                    document.getElementById('chk-cep-status'),
+                    document.getElementById('chk-endereco'),
+                    (ruaBase, bairroCidade) => {
+                        chkUltimaRuaBase = ruaBase;
+                        chkUltimoBairroCidade = bairroCidade;
+                    }
+                );
+            } else if (digitos.length < 8) {
+                chkUltimoCepBuscado = '';
+                chkUltimaRuaBase = '';
+                chkUltimoBairroCidade = '';
+                const statusEl = document.getElementById('chk-cep-status');
+                statusEl.style.display = 'none';
+                statusEl.textContent = '';
+            }
+        }
+
+        function comprarAgora(prodId) {
+            const item = obterItemSelecionado(prodId);
+            if (!item) return;
+
+            compraDoCarrinho = false;
+            v_atual = item.preco;
+            p_atual = `1x ${item.nome}`;
             abrirPagamentoModal();
+        }
+
+        function carregarClienteSalvoNoModal() {
+            try {
+                const salvo = JSON.parse(localStorage.getItem('technocybber_cliente') || '{}');
+                document.getElementById('chk-nome').value = salvo.nome || '';
+                document.getElementById('chk-whatsapp').value = salvo.whatsapp || '';
+                document.getElementById('chk-email').value = salvo.email || localStorage.getItem('technocybber_email') || '';
+                document.getElementById('chk-tipo-entrega').value = salvo.tipoEntrega || 'entrega';
+                document.getElementById('chk-cep').value = salvo.cep || '';
+                document.getElementById('chk-endereco').value = salvo.endereco || '';
+                document.getElementById('chk-complemento').value = salvo.complemento || '';
+                chkUltimoBairroCidade = salvo.bairroCidade || '';
+
+                const statusEl = document.getElementById('chk-cep-status');
+                if (chkUltimoBairroCidade && salvo.cep) {
+                    statusEl.textContent = chkUltimoBairroCidade;
+                    statusEl.style.display = 'block';
+                } else {
+                    statusEl.style.display = 'none';
+                }
+            } catch {}
+            alternarCamposEntrega();
         }
 
         function abrirPagamentoModal() {
+            codigoPedidoAtual = 'TC' + Math.floor(1000 + Math.random() * 9000);
             document.getElementById('payment-modal').style.display = 'block';
-            document.getElementById('email-step').style.display = 'block';
-            document.getElementById('paymentBrick_container').innerHTML = '';
-            document.getElementById('input-email-cliente').value = '';
+            document.getElementById('customer-step').style.display = 'block';
+            document.getElementById('payment-step').style.display = 'none';
+            document.getElementById('payment-result').style.display = 'none';
+            document.getElementById('payment-result').innerHTML = '';
+            document.getElementById('checkout-summary').style.display = 'block';
+
+            document.getElementById('summary-items-text').textContent = p_atual;
+            document.getElementById('summary-total-text').textContent = `Total: ${formatarMoeda(v_atual)}`;
+
+            carregarClienteSalvoNoModal();
+            atualizarScrollBody();
+            setTimeout(() => document.getElementById('chk-nome').focus(), 100);
         }
 
         function fecharModal() {
             document.getElementById('payment-modal').style.display = 'none';
-            if (window.paymentBrickController) window.paymentBrickController.unmount();
+            atualizarScrollBody();
         }
 
-        async function validarEIniciarCheckoutMP() {
-            const email = document.getElementById('input-email-cliente').value;
-            const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            if (!valid) { alert("Digite um e-mail válido."); return; }
+        function voltarParaDadosCliente() {
+            document.getElementById('payment-step').style.display = 'none';
+            document.getElementById('customer-step').style.display = 'block';
+        }
 
-            document.getElementById('email-step').style.display = 'none';
+        function avancarParaPagamento() {
+            const nome = document.getElementById('chk-nome').value.trim();
+            const whatsapp = document.getElementById('chk-whatsapp').value.trim();
+            const waDigitos = whatsapp.replace(/\D/g, '');
+            const email = document.getElementById('chk-email').value.trim();
+            const tipoEntrega = document.getElementById('chk-tipo-entrega').value;
+            const cep = document.getElementById('chk-cep').value.trim();
+            const cepDigitos = cep.replace(/\D/g, '');
+            const enderecoEl = document.getElementById('chk-endereco');
+            const endereco = enderecoEl.value.trim();
+            const complemento = document.getElementById('chk-complemento').value.trim();
 
-            const bricksBuilder = mp.bricks();
-            if (window.paymentBrickController) window.paymentBrickController.unmount();
+            if (nome.length < 3) {
+                mostrarToast('Informe seu nome completo.', 'error');
+                document.getElementById('chk-nome').focus();
+                return;
+            }
+            if (waDigitos.length < 10 || waDigitos.length > 11) {
+                mostrarToast('Informe um WhatsApp válido com DDD.', 'error');
+                document.getElementById('chk-whatsapp').focus();
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                mostrarToast('Digite um e-mail válido para continuar.', 'error');
+                document.getElementById('chk-email').focus();
+                return;
+            }
 
-            window.paymentBrickController = await bricksBuilder.create('payment', 'paymentBrick_container', {
-                initialization: { amount: v_atual, payer: { email, entity_type: 'individual' } },
-                customization: { paymentMethods: { ticket: "all", bankTransfer: "all", creditCard: "all" } },
-                callbacks: {
-                    onReady: () => console.log("MP Pronto"),
-                    onError: (e) => { console.error(e); alert("Erro ao carregar pagamento."); },
-                    onSubmit: ({ formData }) => {
-                        return new Promise((resolve, reject) => {
-                            fetch("/api/finalizar", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ ...formData, produto: p_atual, valor: v_atual })
-                            })
-                            .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-                            .then(res => {
-                                if (res.status === 'approved') {
-                                    alert("✅ Pagamento aprovado! Verifique seu e-mail.");
-                                    carrinho = []; renderCarrinho();
-                                } else if (res.status === 'pending' || res.status === 'in_process') {
-                                    alert("⏳ Pagamento em processamento. Finalize no seu banco.");
-                                } else {
-                                    alert("❌ Pagamento não aprovado. Tente novamente.");
-                                }
-                                resolve();
-                            })
-                            .catch(() => { alert("❌ Erro ao conectar com o servidor."); reject(); });
-                        });
-                    }
+            let enderecoCompleto = 'Retirada na loja / Serviço digital (a combinar)';
+
+            if (tipoEntrega === 'entrega') {
+                if (cepDigitos.length !== 8) {
+                    mostrarToast('Informe um CEP válido com 8 dígitos.', 'error');
+                    document.getElementById('chk-cep').focus();
+                    return;
+                }
+                if (!endereco) {
+                    mostrarToast('Informe a rua e o número para entrega.', 'error');
+                    enderecoEl.focus();
+                    return;
+                }
+                if (chkUltimaRuaBase && (endereco === chkUltimaRuaBase || endereco === `${chkUltimaRuaBase},`)) {
+                    mostrarToast('Acrescente o número da residência após o nome da rua.', 'error');
+                    enderecoEl.focus();
+                    const pos = enderecoEl.value.length;
+                    enderecoEl.setSelectionRange(pos, pos);
+                    return;
+                }
+
+                enderecoCompleto = endereco;
+                if (complemento) enderecoCompleto += ` - ${complemento}`;
+                if (chkUltimoBairroCidade) enderecoCompleto += ` (${chkUltimoBairroCidade})`;
+                enderecoCompleto += ` - CEP: ${cep}`;
+            }
+
+            cliente_checkout = {
+                nome,
+                whatsapp,
+                email,
+                tipoEntrega,
+                enderecoCompleto
+            };
+
+            try {
+                localStorage.setItem('technocybber_email', email);
+                localStorage.setItem('technocybber_cliente', JSON.stringify({
+                    nome, whatsapp, email, tipoEntrega, cep, endereco, complemento,
+                    bairroCidade: chkUltimoBairroCidade
+                }));
+            } catch {}
+
+            renderizarEtapaPagamento();
+        }
+
+        function renderizarEtapaPagamento() {
+            document.getElementById('customer-step').style.display = 'none';
+            document.getElementById('payment-step').style.display = 'block';
+            document.getElementById('badge-codigo-pedido').textContent = `PEDIDO #${codigoPedidoAtual}`;
+
+            const payloadPix = gerarPayloadPix({
+                chave: CONFIG_LOJA.chavePix,
+                nome: CONFIG_LOJA.nomeRecebedor,
+                cidade: CONFIG_LOJA.cidadeRecebedor,
+                valor: v_atual,
+                txid: codigoPedidoAtual
+            });
+
+            document.getElementById('pix-chave-visivel').textContent = CONFIG_LOJA.chavePix;
+            document.getElementById('pix-nome-visivel').textContent = CONFIG_LOJA.nomeRecebedor;
+            document.getElementById('pix-copy-input').value = payloadPix;
+
+            const qrWrap = document.getElementById('pix-qrcode-wrap');
+            qrWrap.innerHTML = '';
+            if (typeof QRCode !== 'undefined') {
+                new QRCode(qrWrap, {
+                    text: payloadPix,
+                    width: 190,
+                    height: 190,
+                    colorDark: '#000000',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } else {
+                qrWrap.innerHTML = '<p style="color:#111; font-size:0.75rem; padding:16px;">Use o botão Copiar Código Pix abaixo.</p>';
+            }
+
+            const linkBtn = document.getElementById('link-pagamento-externo-btn');
+            if (CONFIG_LOJA.linkPagamentoExterno && /^https?:\/\//i.test(CONFIG_LOJA.linkPagamentoExterno)) {
+                linkBtn.href = CONFIG_LOJA.linkPagamentoExterno;
+                linkBtn.style.display = 'block';
+            } else {
+                linkBtn.style.display = 'none';
+            }
+
+            selecionarAbaPagamento('pix');
+        }
+
+        function selecionarAbaPagamento(aba) {
+            const isPix = aba === 'pix';
+            document.getElementById('btn-tab-pix').classList.toggle('active', isPix);
+            document.getElementById('btn-tab-cartao').classList.toggle('active', !isPix);
+            document.getElementById('painel-pix').style.display = isPix ? 'block' : 'none';
+            document.getElementById('painel-cartao').style.display = isPix ? 'none' : 'block';
+        }
+
+        function copiarPix() {
+            const input = document.getElementById('pix-copy-input');
+            if (!input) return;
+            navigator.clipboard.writeText(input.value)
+                .then(() => mostrarToast('Código Pix Copia e Cola copiado!', 'success'))
+                .catch(() => {
+                    input.select();
+                    document.execCommand('copy');
+                    mostrarToast('Código Pix Copia e Cola copiado!', 'success');
+                });
+        }
+
+        function finalizarPedidoWhatsApp(formaPagamento) {
+            const c = cliente_checkout || {};
+            const msg = [
+                `*NOVO PEDIDO TECHNOCYBBER (#${codigoPedidoAtual})*`,
+                `*Itens:* ${p_atual}`,
+                `*Total:* ${formatarMoeda(v_atual)}`,
+                `*Pagamento:* ${formaPagamento}`,
+                ``,
+                `*Cliente:* ${c.nome || '-'}`,
+                `*WhatsApp:* ${c.whatsapp || '-'}`,
+                `*E-mail:* ${c.email || '-'}`,
+                `*Entrega:* ${c.enderecoCompleto || '-'}`
+            ].join('\n');
+
+            const waUrl = `https://wa.me/${CONFIG_LOJA.whatsapp}?text=${encodeURIComponent(msg)}`;
+            window.open(waUrl, '_blank', 'noopener,noreferrer');
+
+            if (compraDoCarrinho) {
+                carrinho = [];
+                salvarCarrinho();
+                renderCarrinho();
+                compraDoCarrinho = false;
+            }
+
+            document.getElementById('payment-step').style.display = 'none';
+            const resultEl = document.getElementById('payment-result');
+            resultEl.style.display = 'block';
+            resultEl.innerHTML = `
+                <div class="result-icon" style="color: var(--success);">✅</div>
+                <div class="order-badge">PEDIDO #${escapeHtml(codigoPedidoAtual)}</div>
+                <div class="result-title" style="color: var(--success);">PEDIDO ENVIADO</div>
+                <p class="result-desc">Se o WhatsApp não abriu automaticamente, clique no botão abaixo para enviar os detalhes do seu pedido.</p>
+                <a href="${waUrl}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp-confirm" style="margin-bottom:10px;">
+                    <i class="fab fa-whatsapp"></i> ABRIR WHATSAPP NOVAMENTE
+                </a>
+                <button onclick="fecharModal()" class="btn">FECHAR</button>
+            `;
+        }
+
+        // ========================
+        // DATA, CEP (CONTATO) & WHATSAPP
+        // ========================
+        let dataPicker = null;
+        if (typeof flatpickr !== 'undefined') {
+            dataPicker = flatpickr('#data', {
+                enableTime: true,
+                time_24hr: true,
+                dateFormat: 'd/m/Y H:i',
+                minDate: new Date(),
+                disableMobile: true,
+                locale: 'pt',
+                onOpen: function(selectedDates, dateStr, instance) {
+                    instance.set('minDate', new Date());
                 }
             });
+        } else {
+            const dataEl = document.getElementById('data');
+            const agora = new Date();
+            const localISO = new Date(agora.getTime() - agora.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            dataEl.type = 'datetime-local';
+            dataEl.min = localISO;
         }
 
-        // ========================
-        // WHATSAPP CONTATO
-        // ========================
-        flatpickr("#data", { enableTime: true, dateFormat: "d/m/Y H:i", minDate: "today", locale: "pt" });
+        function parseDataHoraBR(str) {
+            const match = /^(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})$/.exec(str);
+            if (match) {
+                const [, dia, mes, ano, hora, min] = match.map(Number);
+                return new Date(ano, mes - 1, dia, hora, min, 0, 0);
+            }
+            const parsed = new Date(str);
+            return isNaN(parsed.getTime()) ? null : parsed;
+        }
+
+        let ultimoCepBuscado = '';
+        let ultimaRuaBase = '';
+        let ultimoBairroCidade = '';
+
+        function mascaraEBuscarCEP(input) {
+            const digitos = input.value.replace(/\D/g, '').slice(0, 8);
+            input.value = digitos.length > 5 ? `${digitos.slice(0, 5)}-${digitos.slice(5)}` : digitos;
+
+            if (digitos.length === 8 && digitos !== ultimoCepBuscado) {
+                ultimoCepBuscado = digitos;
+                ultimaRuaBase = '';
+                ultimoBairroCidade = '';
+                consultarViaCEP(
+                    digitos,
+                    document.getElementById('cep-status'),
+                    document.getElementById('endereco'),
+                    (ruaBase, bairroCidade) => {
+                        ultimaRuaBase = ruaBase;
+                        ultimoBairroCidade = bairroCidade;
+                    }
+                );
+            } else if (digitos.length < 8) {
+                ultimoCepBuscado = '';
+                ultimaRuaBase = '';
+                ultimoBairroCidade = '';
+                const statusEl = document.getElementById('cep-status');
+                statusEl.style.display = 'none';
+                statusEl.textContent = '';
+            }
+        }
 
         function enviar() {
-            const nome = document.getElementById('nome').value;
-            const endereco = document.getElementById('endereco').value;
+            const nome = document.getElementById('nome').value.trim();
+            const cep = document.getElementById('cep').value.trim();
+            const enderecoEl = document.getElementById('endereco');
+            const endereco = enderecoEl.value.trim();
             const tipo = document.getElementById('tipo_solicitacao').value;
-            const data = document.getElementById('data').value;
-            const descricao = document.getElementById('descricao').value;
-            if (!nome || !endereco || !tipo || !data || !descricao) { alert("Preencha todos os campos."); return; }
-            const msg = `*SOLICITAÇÃO TECHNOCYBBER*%0A*Cliente:* ${nome}%0A*Endereço:* ${endereco}%0A*Tipo:* ${tipo}%0A*Data:* ${data}%0A*Descrição:* ${descricao}`;
-            window.open(`https://wa.me/5511986756309?text=${msg}`, '_blank');
+            const data = document.getElementById('data').value.trim();
+            const descricao = document.getElementById('descricao').value.trim();
+
+            if (!nome || !endereco || !tipo || !data || !descricao) {
+                mostrarToast('Preencha todos os campos antes de enviar.', 'error');
+                return;
+            }
+
+            if (ultimaRuaBase && (endereco === ultimaRuaBase || endereco === `${ultimaRuaBase},`)) {
+                mostrarToast('Acrescente o número da residência após o nome da rua.', 'error');
+                enderecoEl.focus();
+                const pos = enderecoEl.value.length;
+                enderecoEl.setSelectionRange(pos, pos);
+                return;
+            }
+
+            const agora = new Date();
+            const inicioMinutoAtual = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate(), agora.getHours(), agora.getMinutes(), 0, 0);
+            const dataSelecionada = (dataPicker && dataPicker.selectedDates.length > 0)
+                ? dataPicker.selectedDates[0]
+                : parseDataHoraBR(data);
+
+            if (!dataSelecionada || dataSelecionada < inicioMinutoAtual) {
+                mostrarToast('A data e hora desejadas não podem estar no passado.', 'error');
+                document.getElementById('data').focus();
+                return;
+            }
+
+            let enderecoFinal = endereco;
+            if (ultimoBairroCidade && ultimaRuaBase && endereco.toLowerCase().startsWith(ultimaRuaBase.toLowerCase())) {
+                enderecoFinal = `${endereco} (${ultimoBairroCidade})`;
+            } else if (ultimoBairroCidade && !ultimaRuaBase) {
+                enderecoFinal = `${endereco} (${ultimoBairroCidade})`;
+            }
+            if (cep) enderecoFinal += ` - CEP: ${cep}`;
+
+            const msg = `*SOLICITAÇÃO TECHNOCYBBER*\n*Cliente:* ${nome}\n*Endereço:* ${enderecoFinal}\n*Tipo:* ${tipo}\n*Data:* ${data}\n*Descrição:* ${descricao}`;
+            window.open(`https://wa.me/${CONFIG_LOJA.whatsapp}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
         }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (document.getElementById('payment-modal').style.display === 'block') fecharModal();
+                if (document.getElementById('cart-sidebar').classList.contains('active')) toggleCart(false);
+            }
+        });
+
+        renderProdutos(PRODUTOS);
+        renderCarrinho();
     </script>
 </body>
 </html>
